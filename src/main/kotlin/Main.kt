@@ -1,6 +1,8 @@
+import mu.KotlinLogging
 import utils.ScannerInput
 import java.lang.System.exit
 import java.util.*
+private val logger = KotlinLogging.logger {}
 
 
 fun main(args: Array<String>) {
@@ -47,7 +49,8 @@ fun runMenu() {
     }
 
     fun addPlayer(){
-        println("You chose Add Player")
+        logger.info { "addPlayer() function invoked" }
+
     }
 
     fun listPlayers(){
