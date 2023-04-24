@@ -1,8 +1,13 @@
+import controllers.PlayerAPI
+import models.Player
 import mu.KotlinLogging
 import utils.ScannerInput
+import utils.ScannerInput.readNextInt
+import utils.ScannerInput.readNextLine
 import java.lang.System.exit
 import java.util.*
 private val logger = KotlinLogging.logger {}
+private val playerAPI = PlayerAPI()
 
 
 fun main(args: Array<String>) {
@@ -48,14 +53,27 @@ fun runMenu() {
         } while (true)
     }
 
-    fun addPlayer(){
-        logger.info { "addPlayer() function invoked" }
 
-    }
+fun addPlayer(){
+    //logger.info { "addPlayer() function invoked" }
+    val playerName = readNextLine("Enter the players name: ")
+    val playerDOB = readNextLine("Enter players DOB (DD-MM-YYYY): ")
+    val playerRating = readNextInt("Enter player rating (1-10): ")
+    val isAdded = playerAPI.add(Player(playerName, playerDOB, playerRating, false))
 
-    fun listPlayers(){
-        println("You chose List Players")
+    if (isAdded) {
+        println("Added Successfully")
+    } else {
+        println("Add Failed")
     }
+}
+
+
+fun listPlayers(){
+    //logger.info { "listPlayers() function invoked" }
+    println(playerAPI.listAllPlayers())
+}
+
 
     fun updatePlayer(){
         println("You chose Update Player")
