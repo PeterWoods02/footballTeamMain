@@ -4,6 +4,7 @@ import models.Player
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -44,23 +45,50 @@ class PlayerAPITest {
         emptyPlayers = null
     }
 
-    @Test
-    fun `adding a Player to a populated list adds to ArrayList`() {
-        val newPlayer = Player("Leo Messi", "10-08-1993", 10, false)
-        assertEquals(5, populatedPlayers!!.numberOfPlayers())
-        assertTrue(populatedPlayers!!.add(newPlayer))
-        assertEquals(6, populatedPlayers!!.numberOfPlayers())
-        assertEquals(newPlayer, populatedPlayers!!.findPlayer(populatedPlayers!!.numberOfPlayers() - 1))
+    @Nested
+    inner class AddPlayers {
+
+        @Test
+        fun `adding a Player to a populated list adds to ArrayList`() {
+            val newPlayer = Player("Leo Messi", "10-08-1993", 10, false)
+            assertEquals(5, populatedPlayers!!.numberOfPlayers())
+            assertTrue(populatedPlayers!!.add(newPlayer))
+            assertEquals(6, populatedPlayers!!.numberOfPlayers())
+            assertEquals(newPlayer, populatedPlayers!!.findPlayer(populatedPlayers!!.numberOfPlayers() - 1))
+        }
+
+        @Test
+        fun `adding a Player to an empty list adds to ArrayList`() {
+            val newPlayer = Player("Leo Messi", "10-08-1993", 10, false)
+            assertEquals(0, emptyPlayers!!.numberOfPlayers())
+            assertTrue(emptyPlayers!!.add(newPlayer))
+            assertEquals(1, emptyPlayers!!.numberOfPlayers())
+            assertEquals(newPlayer, emptyPlayers!!.findPlayer(emptyPlayers!!.numberOfPlayers() - 1))
+        }
     }
 
-    @Test
-    fun `adding a Player to an empty list adds to ArrayList`() {
-        val newPlayer = Player("Leo Messi", "10-08-1993", 10, false)
-        assertEquals(0, emptyPlayers!!.numberOfPlayers())
-        assertTrue(emptyPlayers!!.add(newPlayer))
-        assertEquals(1, emptyPlayers!!.numberOfPlayers())
-        assertEquals(newPlayer, emptyPlayers!!.findPlayer(emptyPlayers!!.numberOfPlayers() - 1))
+
+    @Nested
+    inner class ListPlayers {
+
+        @Test
+        fun `listAllPlayers returns No Players Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyPlayers!!.numberOfPlayers())
+            assertTrue(emptyPlayers!!.listAllPlayers().lowercase().contains("no players"))
+        }
+
+        @Test
+        fun `listAllPlayers returns Players when ArrayList has notes stored`() {
+            assertEquals(5, populatedPlayers!!.numberOfPlayers())
+            val notesString = populatedPlayers!!.listAllPlayers().lowercase()
+            assertTrue(notesString.contains("peter"))
+            assertTrue(notesString.contains("james"))
+            assertTrue(notesString.contains("joe"))
+            assertTrue(notesString.contains("bob"))
+            assertTrue(notesString.contains("mary"))
+        }
     }
+
 }
 
 
