@@ -17,9 +17,9 @@ fun main(args: Array<String>) {
 fun mainMenu() : Int {
     return ScannerInput.readNextInt(""" 
         >  ----------------------------------
-        >  |        NOTE KEEPER APP         |
+        >  |        Player Organiser APP    |
         >  ----------------------------------
-        > | NOTE MENU                      |
+        >  | Player MENU                    |
         >  |   1) Add a player              |
         >  |   2) List all players          |
         >  |   3) Update a player           |
