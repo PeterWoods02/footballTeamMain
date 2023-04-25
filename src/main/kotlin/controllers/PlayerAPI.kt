@@ -40,9 +40,9 @@ class PlayerAPI {
 
     //list only players that are amateur
     fun listAmateurPlayers(): String =
-        if  (numberOfAmateurPlayers() == 0)  "No Amateur Players"
+        if  (numberOfAmateurPlayers() == 0)  "No Amateur Players !"
         else formatListString(players.filter { player -> !player.isPlayerPro})
-    //list archived notes
+    //list pro players
     fun listProPlayers(): String =
         if (numberOfProPlayers() == 0) "No Pro Players"
         else formatListString(players.filter { player -> player.isPlayerPro})
@@ -56,10 +56,23 @@ class PlayerAPI {
     fun numberOfAmateurPlayers(): Int = players.count { player: Player -> !player.isPlayerPro }
 
 
+    //List by highest to the lowest rating
+    fun listByWorst(players: List<Player?>): List<Player?> {return players.sortedBy { it?.playerRating }
+    }
+    //list by lowest to the highest rating
+    fun listByBest(players: List<Player?>): List<Player?> { return players.sortedByDescending { it?.playerRating }
+    }
 
-    //removes duplication within NoteAPI
-    private fun formatListString(notesToFormat : List<Player>) : String =
-        notesToFormat
+    //returns number of players based on rating
+    fun numberOfPlayersByRating(rating: Int): Int = players.count { player: Player -> player.playerRating == rating}
+
+
+
+
+
+    //removes duplication within PlayerAPI
+    private fun formatListString(playersToFormat : List<Player>) : String =
+        playersToFormat
             .joinToString (separator = "\n") { player ->
                 players.indexOf(player).toString() + ": " + player.toString() }
 

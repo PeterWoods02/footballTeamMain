@@ -26,7 +26,7 @@ class PlayerAPITest {
         bob = Player("Bob Builder", "22-10-1999", 6, false)
         mary = Player("Mary Daly", "30-09-1998", 7, false)
 
-        //adding 5 Note to the players api
+        //adding 5 players to the players api
         populatedPlayers!!.add(peter!!)
         populatedPlayers!!.add(james!!)
         populatedPlayers!!.add(joe!!)
@@ -78,14 +78,63 @@ class PlayerAPITest {
         }
 
         @Test
-        fun `listAllPlayers returns Players when ArrayList has notes stored`() {
+        fun `listAllPlayers returns Players when ArrayList has players stored`() {
             assertEquals(5, populatedPlayers!!.numberOfPlayers())
-            val notesString = populatedPlayers!!.listAllPlayers().lowercase()
-            assertTrue(notesString.contains("peter"))
-            assertTrue(notesString.contains("james"))
-            assertTrue(notesString.contains("joe"))
-            assertTrue(notesString.contains("bob"))
-            assertTrue(notesString.contains("mary"))
+            val playersString = populatedPlayers!!.listAllPlayers().lowercase()
+            assertTrue(playersString.contains("peter"))
+            assertTrue(playersString.contains("james"))
+            assertTrue(playersString.contains("joe"))
+            assertTrue(playersString.contains("bob"))
+            assertTrue(playersString.contains("mary"))
+        }
+
+        @Test
+        fun testListByBest() {
+            // Create a list of players
+            val players = listOf(
+               bob,
+                james,
+                joe,
+               peter
+            )
+
+            // Sort the players by rating best to worst
+            val expected = listOf(
+                peter,
+                james,
+                joe,
+                bob
+            )
+
+
+
+            // Call the listByBest function
+            val actual = populatedPlayers!!.listByBest(players)
+
+            // Compare the expected and actual results
+            assertEquals(expected, actual)
+        }
+
+        @Test
+        fun testListByWorse() {
+            // Create a list of players
+            val players = listOf(
+                bob,
+                james,
+                joe,
+                peter
+            )
+
+            // Sort the players by rating best to worst
+            val expected = listOf(
+                bob,joe,james,peter
+            )
+
+            // Call the listByWorst function
+            val actual = populatedPlayers!!.listByWorst(players)
+
+            // Compare the expected and actual results
+            assertEquals(expected, actual)
         }
     }
 
