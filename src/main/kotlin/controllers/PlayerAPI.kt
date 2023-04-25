@@ -57,9 +57,11 @@ class PlayerAPI {
 
 
     //List by highest to the lowest rating
-    fun listByWorst() = players.sortBy { it.playerRating}.toString()
+    fun listByWorst(players: List<Player?>): List<Player?> {return players.sortedBy { it?.playerRating }
+    }
     //list by lowest to the highest rating
-    fun listByBest() = players.sortByDescending { it.playerRating}.toString()
+    fun listByBest(players: List<Player?>): List<Player?> { return players.sortedByDescending { it?.playerRating }
+    }
 
     //returns number of players based on rating
     fun numberOfPlayersByRating(rating: Int): Int = players.count { player: Player -> player.playerRating == rating}

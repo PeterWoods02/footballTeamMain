@@ -87,6 +87,55 @@ class PlayerAPITest {
             assertTrue(playersString.contains("bob"))
             assertTrue(playersString.contains("mary"))
         }
+
+        @Test
+        fun testListByBest() {
+            // Create a list of players
+            val players = listOf(
+               bob,
+                james,
+                joe,
+               peter
+            )
+
+            // Sort the players by rating best to worst
+            val expected = listOf(
+                peter,
+                james,
+                joe,
+                bob
+            )
+
+
+
+            // Call the listByBest function
+            val actual = populatedPlayers!!.listByBest(players)
+
+            // Compare the expected and actual results
+            assertEquals(expected, actual)
+        }
+
+        @Test
+        fun testListByWorse() {
+            // Create a list of players
+            val players = listOf(
+                bob,
+                james,
+                joe,
+                peter
+            )
+
+            // Sort the players by rating best to worst
+            val expected = listOf(
+                bob,joe,james,peter
+            )
+
+            // Call the listByWorst function
+            val actual = populatedPlayers!!.listByWorst(players)
+
+            // Compare the expected and actual results
+            assertEquals(expected, actual)
+        }
     }
 
 }
