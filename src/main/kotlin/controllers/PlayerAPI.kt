@@ -38,6 +38,31 @@ class PlayerAPI {
         return (index >= 0 && index < list.size)
     }
 
+    //list only players that are amateur
+    fun listAmateurPlayers(): String =
+        if  (numberOfAmateurPlayers() == 0)  "No Amateur Players"
+        else formatListString(players.filter { player -> !player.isPlayerPro})
+    //list archived notes
+    fun listProPlayers(): String =
+        if (numberOfProPlayers() == 0) "No Pro Players"
+        else formatListString(players.filter { player -> player.isPlayerPro})
+
+
+
+    //returns number of players that are pro
+    fun numberOfProPlayers(): Int = players.count { player: Player -> player.isPlayerPro }
+
+    //returns number of players that are amateur
+    fun numberOfAmateurPlayers(): Int = players.count { player: Player -> !player.isPlayerPro }
+
+
+
+    //removes duplication within NoteAPI
+    private fun formatListString(notesToFormat : List<Player>) : String =
+        notesToFormat
+            .joinToString (separator = "\n") { player ->
+                players.indexOf(player).toString() + ": " + player.toString() }
+
 
 }
 
