@@ -40,7 +40,7 @@ class PlayerAPI {
 
     //list only players that are amateur
     fun listAmateurPlayers(): String =
-        if  (numberOfAmateurPlayers() == 0)  "No Amateur Players"
+        if  (numberOfAmateurPlayers() == 0)  "No Amateur Players !"
         else formatListString(players.filter { player -> !player.isPlayerPro})
     //list archived notes
     fun listProPlayers(): String =
