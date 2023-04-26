@@ -1,6 +1,7 @@
 package models
 
-data class Match (val matchId: Int = 0,
-        val minPlayed : Int,
-                val matchWon:Boolean){
+data class Match (
+    var matchId: Int = 0,
+    var minPlayed : Int,
+    var matchWon:Boolean){
     }

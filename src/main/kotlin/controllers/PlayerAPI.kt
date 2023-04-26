@@ -1,5 +1,6 @@
 package controllers
 
+import models.Match
 import models.Player
 
 class PlayerAPI {
@@ -33,9 +34,9 @@ class PlayerAPI {
 
     fun turnPro(id: Int): Boolean {
         val foundPlayer = findPlayer(id)
-        if (( foundPlayer != null) && (!foundPlayer.isPlayerPro)
+        if ((foundPlayer != null) && (!foundPlayer.isPlayerPro)
 
-        ){
+        ) {
             foundPlayer.isPlayerPro = true
             return true
         }
@@ -60,30 +61,27 @@ class PlayerAPI {
     }
 
 
-
-
-    fun findPlayer(playerId : Int) =  players.find{ player -> player.playerId == playerId }
+    fun findPlayer(playerId: Int) = players.find { player -> player.playerId == playerId }
 
 
     fun searchPlayerByName(searchString: String) =
         formatListString(players.filter { player -> player.playerName.contains(searchString, ignoreCase = true) })
 
 
-
-//utility method to determine if an index is valid in a list.
+    //utility method to determine if an index is valid in a list.
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
     }
 
     //list only players that are amateur
     fun listAmateurPlayers(): String =
-        if  (numberOfAmateurPlayers() == 0)  "No Amateur Players !"
-        else formatListString(players.filter { player -> !player.isPlayerPro})
+        if (numberOfAmateurPlayers() == 0) "No Amateur Players !"
+        else formatListString(players.filter { player -> !player.isPlayerPro })
+
     //list pro players
     fun listProPlayers(): String =
         if (numberOfProPlayers() == 0) "No Pro Players"
-        else formatListString(players.filter { player -> player.isPlayerPro})
-
+        else formatListString(players.filter { player -> player.isPlayerPro })
 
 
     //returns number of players that are pro
@@ -94,25 +92,25 @@ class PlayerAPI {
 
 
     //List by highest to the lowest rating
-    fun listByWorst(players: List<Player?>): List<Player?> {return players.sortedBy { it?.playerRating }
+    fun listByWorst(players: List<Player?>): List<Player?> {
+        return players.sortedBy { it?.playerRating }
     }
+
     //list by lowest to the highest rating
-    fun listByBest(players: List<Player?>): List<Player?> { return players.sortedByDescending { it?.playerRating }
+    fun listByBest(players: List<Player?>): List<Player?> {
+        return players.sortedByDescending { it?.playerRating }
     }
 
     //returns number of players based on rating
-    fun numberOfPlayersByRating(rating: Int): Int = players.count { player: Player -> player.playerRating == rating}
-
-
-
+    fun numberOfPlayersByRating(rating: Int): Int = players.count { player: Player -> player.playerRating == rating }
 
 
     //removes duplication within PlayerAPI
-    private fun formatListString(playersToFormat : List<Player>) : String =
+    private fun formatListString(playersToFormat: List<Player>): String =
         playersToFormat
-            .joinToString (separator = "\n") { player ->
-                players.indexOf(player).toString() + ": " + player.toString() }
-
+            .joinToString(separator = "\n") { player ->
+                players.indexOf(player).toString() + ": " + player.toString()
+            }
 
 }
 
