@@ -50,7 +50,7 @@ fun mainMenu() = readNextInt(
          > -----------------------------------------------------  
          > | REPORT MENU FOR Matches                           |                                
          > |   15) Search for all matches                      |
-         > |   16) List TODO Items                             |
+         > |   16) List TODO Matches                           |
          > |   17) .....                                       |
          > |   18) .....                                       |
          > |   19) .....                                       |
@@ -70,8 +70,8 @@ fun runMenu() {
             3  -> updatePlayer()
             4  -> deletePlayer()
             5 -> turnPro()
-            //6 -> addMatchToPlayer()
-            //7 -> updateMatchContentsInPlayer()
+            6 -> addMatchToPlayer()
+            7 -> updateMatchContentsInPlayer()
             //8 -> deleteAMatch()
             //9 -> markMatchStatus()
             10 -> searchPlayers()
@@ -211,6 +211,48 @@ private fun askUserToChooseAmateurPlayer(): Player? {
     }
     return null //selected player is pro
 }
+
+
+private fun addMatchToPlayer() {
+    val player: Player? = askUserToChooseAmateurPlayer()
+    if (player != null) {
+        if (player.addMatch(Match(minPlayed = readNextInt("\t Minutes Played: "))))
+            println("Add Successful!")
+        else println("Add NOT Successful")
+    }
+}
+
+
+fun updateMatchContentsInPlayer() {
+    val player :Player? = askUserToChooseAmateurPlayer()
+    if (player != null) {
+        val match :Match? = askUserToChooseMatch(player)
+        if (match != null) {
+            val updatedMins = readNextInt("Enter new minutes played: ")
+            if (player.update(match.matchId, Match(minPlayed = updatedMins))) {
+                println("Minutes played updated")
+            } else {
+                println("Minutes played NOT updated")
+            }
+        } else {
+            println("Invalid Match Id")
+        }
+    }
+}
+
+private fun askUserToChooseMatch(player :Player): Match? {
+    if (player.numberOfMatches() > 0) {
+        print(player.listMatches())
+        return player.findOne(readNextInt("\nEnter the id of the match: "))
+    }
+    else{
+        println ("No matches for chosen player")
+        return null
+    }
+}
+
+
+
 
 
 fun exitApp(){
