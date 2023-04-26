@@ -51,7 +51,7 @@ fun mainMenu() = readNextInt(
          > -----------------------------------------------------  
          > | REPORT MENU FOR Matches                           |                                
          > |   15) Search for all matches                      |
-         > |   16) List TODO Matches                           |
+         > |   16) List Lost Matches                           |
          > |   17) .....                                       |
          > |   18) .....                                       |
          > |   19) .....                                       |
@@ -76,8 +76,8 @@ fun runMenu() {
             8 -> deleteAMatch()
             9 -> markMatchStatus()
             10 -> searchPlayers()
-            //15 -> searchMatches()
-            //16 -> listToDoMatches()
+            15 -> searchMatches()
+            16 -> listLostMatches()
             0 -> exitApp()
             else -> println("Invalid menu choice: $option")
         }
@@ -287,9 +287,26 @@ fun markMatchStatus() {
         }
     }
 }
+fun searchMatches() {
+    val searchMins = readNextLine("Enter the minutes played to search by: ")
+    val searchResults = playerAPI.searchMatchesByMins(searchMins)
+    if (searchResults.isEmpty()) {
+        println("No matches found")
+    } else {
+        println(searchResults)
+    }
+}
 
 
 
+
+
+fun listLostMatches(){
+    if (playerAPI.numberOfMatchesWon() > 0) {
+        println("Total Lost matches: ${playerAPI.numberOfMatchesWon()}")
+    }
+    println(playerAPI.listToPlayMatches())
+}
 
 
 

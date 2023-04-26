@@ -105,6 +105,57 @@ class PlayerAPI {
     fun numberOfPlayersByRating(rating: Int): Int = players.count { player: Player -> player.playerRating == rating }
 
 
+    fun searchMatchesByMins(searchString: String): String {
+        return if (numberOfPlayers() == 0) "No notes stored"
+        else {
+            var listOfPlayers = ""
+            for (player in players) {
+                for (match in player.matches) {
+                    if (match.minPlayed.equals(searchString)) {
+                        listOfPlayers += "${player.playerId}: ${player.playerName} \n\t${match}\n"
+                    }
+                }
+            }
+            if (listOfPlayers == "") "No matches found for: $searchString"
+            else listOfPlayers
+        }
+    }
+
+
+
+    //  listing matches
+
+    fun listToPlayMatches(): String =
+        if (numberOfPlayers() == 0) "No players stored"
+        else {
+            var listOfToMatches = ""
+            for (player in players) {
+                for (match in player.matches) {
+                    if (!match.matchWon) {
+                        listOfToMatches+= player.playerName + ": " + match.minPlayed + " minutes played"+ "\n"
+                    }
+                }
+            }
+            listOfToMatches
+        }
+
+
+    //  counting for matches
+
+    fun numberOfMatchesWon(): Int {
+        var numberOfMatchesToPlay = 0
+        for (player in players) {
+            for (match in player.matches) {
+                if (!match.matchWon) {
+                    numberOfMatchesToPlay++
+                }
+            }
+        }
+        return numberOfMatchesToPlay
+    }
+
+
+
     //removes duplication within PlayerAPI
     private fun formatListString(playersToFormat: List<Player>): String =
         playersToFormat
@@ -113,6 +164,8 @@ class PlayerAPI {
             }
 
 }
+
+
 
 
 
