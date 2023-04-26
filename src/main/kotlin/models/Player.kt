@@ -1,8 +1,9 @@
 package models
 
-data class Player(val playerId: Int = 0,
-    val playerName: String,
-                  val playerDOB: String,
-                val playerRating: Int,
-                val isPlayerPro :Boolean){
+data class Player(
+    var playerId: Int = 0,
+    var playerName: String,
+    var playerDOB: String,
+    var playerRating: Int,
+    var isPlayerPro :Boolean){
 }
