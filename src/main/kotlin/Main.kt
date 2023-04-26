@@ -3,6 +3,7 @@ import models.Player
 import models.Match
 import mu.KotlinLogging
 import utils.ScannerInput
+import utils.ScannerInput.readNextChar
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.lang.System.exit
@@ -72,8 +73,8 @@ fun runMenu() {
             5 -> turnPro()
             6 -> addMatchToPlayer()
             7 -> updateMatchContentsInPlayer()
-            //8 -> deleteAMatch()
-            //9 -> markMatchStatus()
+            8 -> deleteAMatch()
+            9 -> markMatchStatus()
             10 -> searchPlayers()
             //15 -> searchMatches()
             //16 -> listToDoMatches()
@@ -250,6 +251,43 @@ private fun askUserToChooseMatch(player :Player): Match? {
         return null
     }
 }
+
+
+fun deleteAMatch() {
+    val player: Player? = askUserToChooseAmateurPlayer()
+    if (player != null) {
+        val match: Match? = askUserToChooseMatch(player)
+        if (match != null) {
+            val isDeleted = player.delete(match.matchId)
+            if (isDeleted) {
+                println("Delete Successful!")
+            } else {
+                println("Delete NOT Successful")
+            }
+        }
+    }
+}
+
+fun markMatchStatus() {
+    val player: Player? = askUserToChooseAmateurPlayer()
+    if (player != null) {
+        val match: Match? = askUserToChooseMatch(player)
+        if (match != null) {
+            var changeStatus = 'X'
+            if (match.matchWon) {
+                changeStatus = readNextChar("The match has been won, Mark as Complete?")
+                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                    match.matchWon = false
+            }
+            else {
+                changeStatus = readNextChar("The match has been lost, mark as complete??")
+                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                    match.matchWon = true
+            }
+        }
+    }
+}
+
 
 
 
