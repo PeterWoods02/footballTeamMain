@@ -28,11 +28,11 @@ fun mainMenu() = readNextInt(
          > -----------------------------------------------------  
          > |                  PLAYER KEEPER APP                |
          > -----------------------------------------------------  
-        >  | Player MENU                                        |
-        >  |   1) Add a player                                 | 
-        >  |   2) List all players                             |
-        >  |   3) Update a player                              |
-        >  |   4) Delete a player                              |
+         > | Player MENU                                       |
+         > |   1) Add a player                                 | 
+         > |   2) List all players                             |
+         > |   3) Update a player                              |
+         > |   4) Delete a player                              |
          > |   5) Turn Player Pro                              |
          > -----------------------------------------------------  
          > | Match MENU                                        | 
@@ -135,7 +135,7 @@ fun updatePlayer() {
         val id = readNextInt("Enter the id of the player to update: ")
         if (playerAPI.findPlayer(id) != null) {
             val playerName = readNextLine("Enter the Players Name: ")
-            val playerDOB = readNextLine("Enter Players DOB ( DD-MM-YYYY: ")
+            val playerDOB = readNextLine("Enter Players DOB ( DD-MM-YYYY ): ")
             val playerRating = readNextInt("Enter a rating for Player ( 1-10 ): ")
 
 
