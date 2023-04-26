@@ -5,5 +5,5 @@ data class Player(
     var playerName: String,
     var playerDOB: String,
     var playerRating: Int,
-    var isPlayerPro :Boolean){
+    var isPlayerPro :Boolean = false){
 }
