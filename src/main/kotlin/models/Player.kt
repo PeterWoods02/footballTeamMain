@@ -1,6 +1,5 @@
 package models
-
-import javax.swing.text.Utilities
+import utils.Utilities
 
 data class Player(
     var playerId: Int = 0,
@@ -30,13 +29,13 @@ data class Player(
     }
 
     fun update(id: Int, newMatch :Match): Boolean {
-        val foundItem = findOne(id)
+        val foundMatch = findOne(id)
 
         //if the object exists, use the details passed in the newMatch parameter to
         //update the found object in the Set
-        if (foundItem != null){
-            foundItem.minPlayed = newMatch.minPlayed
-            foundItem.matchWon = newMatch.matchWon
+        if (foundMatch != null){
+            foundMatch.minPlayed = newMatch.minPlayed
+            foundMatch.matchWon = newMatch.matchWon
             return true
         }
 
@@ -46,8 +45,7 @@ data class Player(
 
     fun listMatches() =
         if (matches.isEmpty())  "\tNO MATCHES ADDED"
-    else null
-        //else  Utilities.formatListString(matches)
+        else  Utilities.formatSetString(matches)
 
     override fun toString(): String {
         val pro = if (isPlayerPro) 'Y' else 'N'

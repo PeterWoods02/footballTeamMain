@@ -2,6 +2,7 @@ package controllers
 
 import models.Match
 import models.Player
+import utils.Utilities.formatListString
 
 class PlayerAPI {
     private var players = ArrayList<Player>()
@@ -106,7 +107,7 @@ class PlayerAPI {
 
 
     fun searchMatchesByMins(searchString: String): String {
-        return if (numberOfPlayers() == 0) "No notes stored"
+        return if (numberOfPlayers() == 0) "No players stored"
         else {
             var listOfPlayers = ""
             for (player in players) {
@@ -156,12 +157,7 @@ class PlayerAPI {
 
 
 
-    //removes duplication within PlayerAPI
-    private fun formatListString(playersToFormat: List<Player>): String =
-        playersToFormat
-            .joinToString(separator = "\n") { player ->
-                players.indexOf(player).toString() + ": " + player.toString()
-            }
+
 
 }
 

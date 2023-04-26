@@ -7,9 +7,9 @@ data class Match (
 
     override fun toString() =
         if (matchWon)
-            "$matchId: $minPlayed (Complete)"
+            "$matchId: $minPlayed (Won)"
         else
-            "$matchId: $minPlayed (TODO)"
+            "$matchId: $minPlayed (Lost)"
 
 }
 
