@@ -2,10 +2,15 @@ package controllers
 
 import models.Match
 import models.Player
+import persistence.Serializer
 import utils.Utilities.formatListString
 
-class PlayerAPI {
-    private var players = ArrayList<Player>()
+class PlayerAPI (serializerType: Serializer){
+
+        private var serializer: Serializer = serializerType
+
+
+        private var players = ArrayList<Player>()
 
     private var lastId = 0
     private fun getId() = lastId++
@@ -156,6 +161,15 @@ class PlayerAPI {
     }
 
 
+    @Throws(Exception::class)
+    fun load() {
+        players= serializer.read() as ArrayList<Player>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(players)
+    }
 
 
 

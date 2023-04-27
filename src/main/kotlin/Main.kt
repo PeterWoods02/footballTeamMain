@@ -2,17 +2,20 @@ import controllers.PlayerAPI
 import models.Player
 import models.Match
 import mu.KotlinLogging
+import persistence.XMLSerializer
 import utils.ScannerInput
 import utils.ScannerInput.readNextChar
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import java.io.File
 import java.lang.System.exit
 import java.util.*
 import kotlin.system.exitProcess
 
 
 private val logger = KotlinLogging.logger {}
-private val playerAPI = PlayerAPI()
+private val playerAPI = PlayerAPI(XMLSerializer(File("players.xml")))
+
 
 
 
