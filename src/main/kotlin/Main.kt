@@ -2,17 +2,22 @@ import controllers.PlayerAPI
 import models.Player
 import models.Match
 import mu.KotlinLogging
+import persistence.XMLSerializer
 import utils.ScannerInput
 import utils.ScannerInput.readNextChar
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import java.io.File
 import java.lang.System.exit
 import java.util.*
 import kotlin.system.exitProcess
 
 
 private val logger = KotlinLogging.logger {}
-private val playerAPI = PlayerAPI()
+private val playerAPI = PlayerAPI(XMLSerializer(File("players.xml")))
+
+//private val PlayerAPI = PlayerAPI(JSONSerializer(File("players.json")))
+
 
 
 
@@ -56,6 +61,9 @@ fun mainMenu() = readNextInt(
          > |   18) .....                                       |
          > |   19) .....                                       |
          > -----------------------------------------------------  
+         > |   20) Save to External File                       |
+         > |   21) Load from External File                     |
+         > -----------------------------------------------------  
          > |   0) Exit                                         |
          > -----------------------------------------------------  
          > ==>> """.trimMargin(">")
@@ -78,6 +86,8 @@ fun runMenu() {
             10 -> searchPlayers()
             15 -> searchMatches()
             16 -> listLostMatches()
+            20 -> save()
+            21 -> load()
             0 -> exitApp()
             else -> println("Invalid menu choice: $option")
         }
@@ -307,6 +317,24 @@ fun listLostMatches(){
     }
     println(playerAPI.listToPlayMatches())
 }
+
+
+fun save() {
+    try {
+        playerAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+fun load() {
+    try {
+        playerAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
+}
+
 
 
 
