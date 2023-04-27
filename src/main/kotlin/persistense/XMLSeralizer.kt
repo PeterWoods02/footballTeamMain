@@ -1,0 +1,4 @@
+package persistense
+
+class XMLSerializer {
+}
