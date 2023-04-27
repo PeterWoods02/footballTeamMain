@@ -16,6 +16,8 @@ import kotlin.system.exitProcess
 private val logger = KotlinLogging.logger {}
 private val playerAPI = PlayerAPI(XMLSerializer(File("players.xml")))
 
+//private val PlayerAPI = PlayerAPI(JSONSerializer(File("players.json")))
+
 
 
 
