@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import persistence.JSONSerializer
 import persistence.XMLSerializer
 import java.io.File
 import kotlin.test.assertEquals
@@ -181,7 +182,56 @@ class PlayerAPITest {
             assertEquals(storingPlayers.findPlayer(1), loadedPlayers.findPlayer(1))
             assertEquals(storingPlayers.findPlayer(2), loadedPlayers.findPlayer(2))
         }
+
+/*
+        @Nested
+        inner class PersistenceTests {
+
+            @Test
+            fun `saving and loading an empty collection in JSON doesn't crash app`() {
+                // Saving an empty players.JSON file.
+                val storingPlayers = PlayerAPI(JSONSerializer(File("players.JSON")))
+                storingPlayers.store()
+
+                //Loading the empty players.JSON file into a new object
+                val loadedPlayers = PlayerAPI(JSONSerializer(File("players.JSON")))
+                loadedPlayers.load()
+
+                //Comparing the source of the players (storingPlayers) with the JSON loaded players (loadedPlayers)
+                assertEquals(0, storingPlayers.numberOfPlayers())
+                assertEquals(0, loadedPlayers.numberOfPlayers())
+                assertEquals(storingPlayers.numberOfPlayers(), loadedPlayers.numberOfPlayers())
+            }
+
+            @Test
+            fun `saving and loading an loaded collection in JSON doesn't loose data`() {
+                // Storing 3 players to the players.JSON file.
+                val storingPlayers = PlayerAPI(JSONSerializer(File("players.JSON")))
+                storingPlayers.add(peter!!)
+                storingPlayers.add(james!!)
+                storingPlayers.add(bob!!)
+                storingPlayers.store()
+
+                //Loading players.JSON into a different collection
+                val loadedPlayers = PlayerAPI(JSONSerializer(File("players.JSON")))
+                loadedPlayers.load()
+
+                //Comparing the source of the players (storingPlayers) with the JSON loaded players (loadedPlayers)
+                assertEquals(3, storingPlayers.numberOfPlayers())
+                assertEquals(3, loadedPlayers.numberOfPlayers())
+                assertEquals(storingPlayers.numberOfPlayers(), loadedPlayers.numberOfPlayers())
+                assertEquals(storingPlayers.findPlayer(0), loadedPlayers.findPlayer(0))
+                assertEquals(storingPlayers.findPlayer(1), loadedPlayers.findPlayer(1))
+                assertEquals(storingPlayers.findPlayer(2), loadedPlayers.findPlayer(2))
+            }
+        }
+*/
     }
+
+
+
+
+
 
 
 }
