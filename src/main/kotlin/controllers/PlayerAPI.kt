@@ -76,6 +76,10 @@ class PlayerAPI (serializerType: Serializer){
         formatListString(players.filter { player -> player.playerName.contains(searchString, ignoreCase = true) })
 
 
+    fun aboveRating(searchInt : Int)=
+        formatListString(players.filter { player -> player.playerRating >= searchInt })
+
+
     //utility method to determine if an index is valid in a list.
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
@@ -98,7 +102,7 @@ class PlayerAPI (serializerType: Serializer){
     //returns number of players that are amateur
     fun numberOfAmateurPlayers(): Int = players.count { player: Player -> !player.isPlayerPro }
 
-
+//methods to run for testing
     //List by highest to the lowest rating
     fun listByWorst(players: List<Player?>): List<Player?> {
         return players.sortedBy { it?.playerRating }
@@ -108,6 +112,12 @@ class PlayerAPI (serializerType: Serializer){
     fun listByBest(players: List<Player?>): List<Player?> {
         return players.sortedByDescending { it?.playerRating }
     }
+
+
+    //List by highest to the lowest rated players
+    fun listByLeast() = players.sortBy { it.playerRating}.toString()
+    //list by lowest to the highest prated players
+    fun listByMost() = players.sortByDescending { it.playerRating}.toString()
 
     //returns number of players based on rating
     fun numberOfPlayersByRating(rating: Int): Int = players.count { player: Player -> player.playerRating == rating }
