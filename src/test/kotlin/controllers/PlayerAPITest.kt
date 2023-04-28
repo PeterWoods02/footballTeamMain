@@ -148,7 +148,7 @@ class PlayerAPITest {
     inner class SearchPlayers{
 
         @Test
-        fun searchPlayerByDOB() {
+        fun SearchPlayerByDOB() {
 
             val searchDate1 = "01-01-1990"
             val searchResult1 = populatedPlayers?.searchPlayerByDOB(searchDate1)

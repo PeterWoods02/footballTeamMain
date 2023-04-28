@@ -350,12 +350,12 @@ fun markMatchStatus() {
         if (match != null) {
             var changeStatus = 'X'
             if (match.matchWon) {
-                changeStatus = readNextChar("The match has been won, Mark as Complete?")
+                changeStatus = readNextChar("The match has been won, Mark as Complete? (Y)")
                 if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
                     match.matchWon = false
             }
             else {
-                changeStatus = readNextChar("The match has been lost, mark as complete??")
+                changeStatus = readNextChar("The match has been lost, mark as complete?? (Y)")
                 if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
                     match.matchWon = true
             }
