@@ -102,7 +102,7 @@ class PlayerAPI (serializerType: Serializer){
     //returns number of players that are amateur
     fun numberOfAmateurPlayers(): Int = players.count { player: Player -> !player.isPlayerPro }
 
-
+//methods to run for testing
     //List by highest to the lowest rating
     fun listByWorst(players: List<Player?>): List<Player?> {
         return players.sortedBy { it?.playerRating }

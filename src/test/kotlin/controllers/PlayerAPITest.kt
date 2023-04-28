@@ -1,11 +1,8 @@
 package controllers
 
 import models.Player
-import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
 import persistence.JSONSerializer
 import persistence.XMLSerializer
 import java.io.File
@@ -121,7 +118,7 @@ class PlayerAPITest {
         }
 
         @Test
-        fun testListByWorse() {
+        fun testListByWorst() {
             // Create a list of players
             val players = listOf(
                 bob,
@@ -141,6 +138,9 @@ class PlayerAPITest {
             // Compare the expected and actual results
             assertEquals(expected, actual)
         }
+
+
+
     }
 
 
