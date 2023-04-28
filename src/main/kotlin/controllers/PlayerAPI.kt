@@ -113,6 +113,12 @@ class PlayerAPI (serializerType: Serializer){
         return players.sortedByDescending { it?.playerRating }
     }
 
+
+    //List by highest to the lowest rated players
+    fun listByLeast() = players.sortBy { it.playerRating}.toString()
+    //list by lowest to the highest prated players
+    fun listByMost() = players.sortByDescending { it.playerRating}.toString()
+
     //returns number of players based on rating
     fun numberOfPlayersByRating(rating: Int): Int = players.count { player: Player -> player.playerRating == rating }
 

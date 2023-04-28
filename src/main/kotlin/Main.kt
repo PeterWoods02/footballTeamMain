@@ -237,7 +237,26 @@ fun listAboveRating(){
     }
 }
 
-fun listWorstBest(){}
+fun listWorstBest(){
+    if (playerAPI.numberOfPlayers() > 0) {
+        val option = readNextInt(
+            """
+                  > -------------------------------------------
+                  > |   1) List by Highest - Lowest rating     |
+                  > |   2) List by Lowest - Highest rating     |
+                  > -------------------------------------------
+         > ==>> """.trimMargin(">"))
+
+        when (option) {
+            1 -> playerAPI.listByMost()
+            2 -> playerAPI.listByLeast()
+            else -> println("Invalid option entered: $option")
+        }
+        println(playerAPI.listAllPlayers())
+    } else {
+        println("Option Invalid - No players stored")
+    }
+}
 
 
 
