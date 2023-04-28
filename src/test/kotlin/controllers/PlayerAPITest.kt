@@ -165,6 +165,33 @@ class PlayerAPITest {
     }
 
 
+    @Nested
+    inner class UpdatePlayers {
+        @Test
+        fun `updating a Player that does not exist returns false`(){
+            assertFalse(populatedPlayers!!.update(6, Player(6,"Updating Player", "01-01-2000", 8, false)))
+            assertFalse(populatedPlayers!!.update(-1, Player(-1,"Updating Player", "01-01-2000", 8, false)))
+            assertFalse(emptyPlayers!!.update(0, Player(0,"Updating Player", "01-01-2000", 8, false)))
+        }
+
+        @Test
+        fun `updating a Player that exists returns true and updates`() {
+            //check Player 1 exists and check the contents
+            assertEquals(peter, populatedPlayers!!.findPlayer(0))
+            assertEquals("Peter Woods", populatedPlayers!!.findPlayer(0)!!.playerName)
+            assertEquals("11-09-2002", populatedPlayers!!.findPlayer(0)!!.playerDOB)
+            assertEquals(9, populatedPlayers!!.findPlayer(0)!!.playerRating)
+
+            //update Player 1 with new information and ensure contents updated successfully
+            assertTrue(populatedPlayers!!.update(0, Player(0,"Peter Wood", "11-09-2004", 8, false)))
+            assertEquals("Peter Wood", populatedPlayers!!.findPlayer(0)!!.playerName)
+            assertEquals("11-09-2004", populatedPlayers!!.findPlayer(0)!!.playerDOB)
+            assertEquals(8, populatedPlayers!!.findPlayer(0)!!.playerRating)
+        }
+    }
+
+
+
 
     @Nested
     inner class PersistenceTests {
