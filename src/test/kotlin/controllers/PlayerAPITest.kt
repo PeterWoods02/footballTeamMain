@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import persistence.JSONSerializer
 import persistence.XMLSerializer
 import java.io.File
+import java.text.SimpleDateFormat
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
@@ -139,6 +140,29 @@ class PlayerAPITest {
             assertEquals(expected, actual)
         }
 
+
+
+    }
+
+    @Nested
+    inner class SearchPlayers{
+
+        @Test
+        fun searchPlayerByDOB() {
+
+            val searchDate1 = "01-01-1990"
+            val searchResult1 = populatedPlayers?.searchPlayerByDOB(searchDate1)
+            val searchDate2 = "01-01-2005"
+            val searchResult2 = populatedPlayers?.searchPlayerByDOB(searchDate2)
+
+
+            assertEquals("0: Peter Woods 11-09-2002 \n" +
+                    "1: James Power 13-02-2000 \n" +
+                    "2: Joe Doe 02-04-2003 \n" +
+                    "3: Bob Builder 22-10-1999 \n" +
+                    "4: Mary Daly 30-09-1998 \n", searchResult1)
+            assertEquals("No matches found for: 01-01-2005", searchResult2)
+        }
 
 
     }
