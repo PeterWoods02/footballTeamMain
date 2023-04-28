@@ -79,7 +79,7 @@ class PlayerAPI (serializerType: Serializer){
 
 
     fun searchPlayerByDOB(userInputDate: String): String {
-        if (numberOfPlayers() == 0) return "No players stored"
+        if (numberOfPlayers() == 0) return "No players stored!"
         var listOfPlayers = ""
         val dateFormat = SimpleDateFormat("DD-MM-YYYY")
         val inputDate = dateFormat.parse(userInputDate)
