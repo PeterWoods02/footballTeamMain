@@ -10,6 +10,8 @@ import persistence.JSONSerializer
 import persistence.XMLSerializer
 import java.io.File
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNull
 
 class PlayerAPITest {
 
@@ -23,11 +25,11 @@ class PlayerAPITest {
 
     @BeforeEach
     fun setup() {
-        peter = Player(1,"Peter Woods", "11-09-2002", 9, false)
-        james = Player(2,"James Power", "13-02-2000", 8, false)
-        joe = Player(3,"Joe Doe", "02-04-2003", 7, false)
-        bob = Player(4,"Bob Builder", "22-10-1999", 6, false)
-        mary = Player(5,"Mary Daly", "30-09-1998", 7, false)
+        peter = Player(0,"Peter Woods", "11-09-2002", 9, false)
+        james = Player(1,"James Power", "13-02-2000", 8, false)
+        joe = Player(2,"Joe Doe", "02-04-2003", 7, false)
+        bob = Player(3,"Bob Builder", "22-10-1999", 6, false)
+        mary = Player(4,"Mary Daly", "30-09-1998", 7, false)
 
         //adding 5 players to the players api
         populatedPlayers!!.add(peter!!)
@@ -140,6 +142,55 @@ class PlayerAPITest {
             assertEquals(expected, actual)
         }
     }
+
+
+    @Nested
+    inner class DeletePlayers {
+
+        @Test
+        fun `deleting a Player that does not exist, returns false`() {
+            assertFalse { (emptyPlayers!!.delete(0)) }
+            assertFalse {(populatedPlayers!!.delete(-1))}
+            assertFalse {(populatedPlayers!!.delete(5))}
+        }
+
+        @Test
+        fun `deleting a Player that exists delete and returns deleted object`() {
+            assertEquals(5, populatedPlayers!!.numberOfPlayers())
+          populatedPlayers!!.delete(0)
+            assertEquals(4, populatedPlayers!!.numberOfPlayers())
+         populatedPlayers!!.delete(1)
+            assertEquals(3, populatedPlayers!!.numberOfPlayers())
+        }
+    }
+
+
+    @Nested
+    inner class UpdatePlayers {
+        @Test
+        fun `updating a Player that does not exist returns false`(){
+            assertFalse(populatedPlayers!!.update(6, Player(6,"Updating Player", "01-01-2000", 8, false)))
+            assertFalse(populatedPlayers!!.update(-1, Player(-1,"Updating Player", "01-01-2000", 8, false)))
+            assertFalse(emptyPlayers!!.update(0, Player(0,"Updating Player", "01-01-2000", 8, false)))
+        }
+
+        @Test
+        fun `updating a Player that exists returns true and updates`() {
+            //check Player 1 exists and check the contents
+            assertEquals(peter, populatedPlayers!!.findPlayer(0))
+            assertEquals("Peter Woods", populatedPlayers!!.findPlayer(0)!!.playerName)
+            assertEquals("11-09-2002", populatedPlayers!!.findPlayer(0)!!.playerDOB)
+            assertEquals(9, populatedPlayers!!.findPlayer(0)!!.playerRating)
+
+            //update Player 1 with new information and ensure contents updated successfully
+            assertTrue(populatedPlayers!!.update(0, Player(0,"Peter Wood", "11-09-2004", 8, false)))
+            assertEquals("Peter Wood", populatedPlayers!!.findPlayer(0)!!.playerName)
+            assertEquals("11-09-2004", populatedPlayers!!.findPlayer(0)!!.playerDOB)
+            assertEquals(8, populatedPlayers!!.findPlayer(0)!!.playerRating)
+        }
+    }
+
+
 
 
     @Nested
