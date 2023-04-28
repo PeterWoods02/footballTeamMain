@@ -9,14 +9,14 @@ class PlayerAPI (serializerType: Serializer){
 
         private var serializer: Serializer = serializerType
 
-
         private var players = ArrayList<Player>()
 
-    private var lastId = 0
-    private fun getId() = lastId++
+
 
     fun add(player: Player): Boolean {
-        player.playerId = getId()
+
+        val newPlayerId = if (players.isEmpty()) 1 else players.maxByOrNull { it.playerId }!!.playerId + 1
+        player.playerId = newPlayerId
         return players.add(player)
     }
 
@@ -193,6 +193,19 @@ class PlayerAPI (serializerType: Serializer){
         }
         return numberOfMatchesToPlay
     }
+
+
+   fun playersSixtyMins(): String {
+       var playersSixty = ""
+       for (player in players) {
+           for (match in player.matches) {
+               if (match.minPlayed > 60) {
+                   playersSixty += player.toString()
+               }
+           }
+       }
+       return playersSixty
+   }
 
 
     @Throws(Exception::class)

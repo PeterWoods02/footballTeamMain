@@ -57,7 +57,7 @@ fun mainMenu() = readNextInt(
          > | REPORT MENU FOR Matches                           |                                
          > |   15) Search for all matches                      |
          > |   16) List Lost Matches                           |
-         > |   17) .....                                       |
+         > |   17) List players good game time >60             |
          > |   18) .....                                       |
          > |   19) .....                                       |
          > -----------------------------------------------------  
@@ -89,6 +89,7 @@ fun runMenu() {
             13 -> listWorstBest()
             15 -> searchMatches()
             16 -> listLostMatches()
+            17 -> recSixtyMins()
             20 -> save()
             21 -> load()
             0 -> exitApp()
@@ -383,7 +384,13 @@ fun listLostMatches(){
     println(playerAPI.listToPlayMatches())
 }
 
+fun recSixtyMins(){
+    if(playerAPI.numberOfPlayers()>0){
 
+        println("Players with more than 60 mins played: \n ${playerAPI.playersSixtyMins()} ")
+    }
+println("No players")
+}
 
 
 

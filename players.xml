@@ -10,15 +10,6 @@
       <lastMatchId>0</lastMatchId>
     </models.Player>
     <models.Player>
-      <playerId>1</playerId>
-      <playerName>James Power</playerName>
-      <playerDOB>13-02-2000</playerDOB>
-      <playerRating>8</playerRating>
-      <isPlayerPro>false</isPlayerPro>
-      <matches class="linked-hash-set"/>
-      <lastMatchId>0</lastMatchId>
-    </models.Player>
-    <models.Player>
       <playerId>2</playerId>
       <playerName>Bob Builder</playerName>
       <playerDOB>22-10-1999</playerDOB>
