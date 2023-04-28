@@ -3,14 +3,14 @@ import models.Player
 import models.Match
 import mu.KotlinLogging
 import persistence.XMLSerializer
-import utils.ScannerInput
 import utils.ScannerInput.readNextChar
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.io.File
 import java.lang.System.exit
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.system.exitProcess
 
 
 private val logger = KotlinLogging.logger {}
@@ -49,7 +49,7 @@ fun mainMenu() = readNextInt(
          > -----------------------------------------------------  
          > | REPORT MENU FOR PLAYERS                           | 
          > |   10) Search for all player by Name               |
-         > |   11) .....                                       |
+         > |   11) Search by Date of Birth                     |
          > |   12) List above X rating                         |
          > |   13) List from best to worst                     |
          > |   14) .....                                       |
@@ -84,6 +84,7 @@ fun runMenu() {
             8 -> deleteAMatch()
             9 -> markMatchStatus()
             10 -> searchPlayers()
+            11 -> searchDOB()
             12 -> listAboveRating()
             13 -> listWorstBest()
             15 -> searchMatches()
@@ -97,17 +98,28 @@ fun runMenu() {
 }
 
 
-fun addPlayer(){
+fun addPlayer(): String {
     //logger.info { "addPlayer() function invoked" }
     val playerName = readNextLine("Enter the players name: ")
-    val playerDOB = readNextLine("Enter players DOB (DD-MM-YYYY): ")
-    val playerRating = readNextInt("Enter player rating (1-10): ")
-    val isAdded = playerAPI.add(Player(playerName = playerName, playerDOB = playerDOB, playerRating = playerRating))
 
-    if (isAdded) {
-        println("Added Successfully")
-    } else {
-        println("Add Failed")
+    val dateFormat = SimpleDateFormat("DD-MM-YYYY")
+    while (true) {
+        val playerDOB = readNextLine("Enter players DOB (DD-MM-YYYY): ")
+        try {
+            dateFormat.parse(playerDOB)
+
+            val playerRating = readNextInt("Enter player rating (1-10): ")
+            val isAdded =
+                playerAPI.add(Player(playerName = playerName, playerDOB = playerDOB, playerRating = playerRating))
+            if (isAdded) {
+                println("Added Successfully")
+            } else {
+                println("Add Failed")
+            }
+            return playerDOB
+        } catch (e: ParseException) {
+            println("Invalid date. Please enter your date of players birth in the format DD-MM-YYYY:")
+        }
     }
 }
 
@@ -205,6 +217,22 @@ fun searchPlayers() {
     }
 }
 
+
+fun searchDOB() {
+    val searchDOB = readNextLine("Enter a Date (DD-MM-YYYY): ")
+    val dateFormat = SimpleDateFormat("DD-MM-YYYY")
+    try {
+        dateFormat.parse(searchDOB) // try to parse the user input as a date
+        val searchResults = playerAPI.searchPlayerByDOB(searchDOB)
+        if (searchResults.isEmpty()) {
+            println("No players found")
+        } else {
+            println(searchResults)
+        }
+    } catch (e: ParseException) {
+        println("Invalid date") //stackOverflow to catch incorrect date input when going from string to date input
+    }
+}
 
 //HELPER FUNCTIONS
 

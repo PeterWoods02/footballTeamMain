@@ -1,9 +1,9 @@
 package controllers
 
-import models.Match
 import models.Player
 import persistence.Serializer
 import utils.Utilities.formatListString
+import java.text.SimpleDateFormat
 
 class PlayerAPI (serializerType: Serializer){
 
@@ -64,6 +64,8 @@ class PlayerAPI (serializerType: Serializer){
     }
 
 
+
+
     fun numberOfPlayers(): Int {
         return players.size
     }
@@ -74,6 +76,26 @@ class PlayerAPI (serializerType: Serializer){
 
     fun searchPlayerByName(searchString: String) =
         formatListString(players.filter { player -> player.playerName.contains(searchString, ignoreCase = true) })
+
+
+    fun searchPlayerByDOB(userInputDate: String): String {
+        if (numberOfPlayers() == 0) return "No players stored"
+        var listOfPlayers = ""
+        val dateFormat = SimpleDateFormat("DD-MM-YYYY")
+        val inputDate = dateFormat.parse(userInputDate)
+        for (player in players) {
+            val playerDOB = dateFormat.parse(player.playerDOB)
+            if (playerDOB.after(inputDate)) {
+                listOfPlayers += "${player.playerId}: ${player.playerName} ${player.playerDOB} \n"
+            }
+        }
+
+        return if (listOfPlayers == "") "No matches found for: $userInputDate" else listOfPlayers
+    }
+
+
+
+
 
 
     fun aboveRating(searchInt : Int)=
