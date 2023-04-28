@@ -76,6 +76,10 @@ class PlayerAPI (serializerType: Serializer){
         formatListString(players.filter { player -> player.playerName.contains(searchString, ignoreCase = true) })
 
 
+    fun aboveRating(searchInt : Int)=
+        formatListString(players.filter { player -> player.playerRating >= searchInt })
+
+
     //utility method to determine if an index is valid in a list.
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)

@@ -50,8 +50,8 @@ fun mainMenu() = readNextInt(
          > | REPORT MENU FOR PLAYERS                           | 
          > |   10) Search for all player by Name               |
          > |   11) .....                                       |
-         > |   12) .....                                       |
-         > |   13) .....                                       |
+         > |   12) List above X rating                         |
+         > |   13) List from best to worst                     |
          > |   14) .....                                       |
          > -----------------------------------------------------  
          > | REPORT MENU FOR Matches                           |                                
@@ -84,6 +84,8 @@ fun runMenu() {
             8 -> deleteAMatch()
             9 -> markMatchStatus()
             10 -> searchPlayers()
+            12 -> listAboveRating()
+            13 -> listWorstBest()
             15 -> searchMatches()
             16 -> listLostMatches()
             20 -> save()
@@ -224,6 +226,22 @@ private fun askUserToChooseAmateurPlayer(): Player? {
 }
 
 
+
+fun listAboveRating(){
+    val searchRating = readNextInt("Enter rating to search by: ")
+    val searchResults = playerAPI.aboveRating(searchRating)
+    if (searchResults.isEmpty()) {
+        println("No players found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun listWorstBest(){}
+
+
+
+
 private fun addMatchToPlayer() {
     val player: Player? = askUserToChooseAmateurPlayer()
     if (player != null) {
@@ -317,6 +335,10 @@ fun listLostMatches(){
     }
     println(playerAPI.listToPlayMatches())
 }
+
+
+
+
 
 
 fun save() {
