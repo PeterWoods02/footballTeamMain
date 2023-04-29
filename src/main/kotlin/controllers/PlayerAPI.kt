@@ -5,25 +5,19 @@ import persistence.Serializer
 import utils.Utilities.formatListString
 import java.text.SimpleDateFormat
 
-class PlayerAPI (serializerType: Serializer){
+class PlayerAPI(serializerType: Serializer) {
 
-        private var serializer: Serializer = serializerType
+    private var serializer: Serializer = serializerType
 
-        private var players = ArrayList<Player>()
-
-
+    private var players = ArrayList<Player>()
 
     fun add(player: Player): Boolean {
-
         val newPlayerId = if (players.isEmpty()) 1 else players.maxByOrNull { it.playerId }!!.playerId + 1
         player.playerId = newPlayerId
         return players.add(player)
     }
 
     fun delete(id: Int) = players.removeIf { player -> player.playerId == id }
-
-
-
 
     fun update(id: Int, player: Player?): Boolean {
         // find the player object by the index number
@@ -57,26 +51,20 @@ class PlayerAPI (serializerType: Serializer){
         } else {
             var listOfPlayers = ""
             for (i in players.indices) {
-                listOfPlayers += "${i}: ${players[i]} \n"
+                listOfPlayers += "$i: ${players[i]} \n"
             }
             listOfPlayers
         }
     }
 
-
-
-
     fun numberOfPlayers(): Int {
         return players.size
     }
 
-
     fun findPlayer(playerId: Int) = players.find { player -> player.playerId == playerId }
-
 
     fun searchPlayerByName(searchString: String) =
         formatListString(players.filter { player -> player.playerName.contains(searchString, ignoreCase = true) })
-
 
     fun searchPlayerByDOB(userInputDate: String): String {
         if (numberOfPlayers() == 0) return "No players stored"
@@ -93,59 +81,52 @@ class PlayerAPI (serializerType: Serializer){
         return if (listOfPlayers == "") "No matches found for: $userInputDate" else listOfPlayers
     }
 
-
-
-
-
-
-    fun aboveRating(searchInt : Int)=
+    fun aboveRating(searchInt: Int) =
         formatListString(players.filter { player -> player.playerRating >= searchInt })
 
-
-    //utility method to determine if an index is valid in a list.
-    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
-        return (index >= 0 && index < list.size)
-    }
-
-    //list only players that are amateur
+    // list only players that are amateur
     fun listAmateurPlayers(): String =
-        if (numberOfAmateurPlayers() == 0) "No Amateur Players !"
-        else formatListString(players.filter { player -> !player.isPlayerPro })
+        if (numberOfAmateurPlayers() == 0) {
+            "No Amateur Players !"
+        } else {
+            formatListString(players.filter { player -> !player.isPlayerPro })
+        }
 
-    //list pro players
+    // list pro players
     fun listProPlayers(): String =
-        if (numberOfProPlayers() == 0) "No Pro Players"
-        else formatListString(players.filter { player -> player.isPlayerPro })
+        if (numberOfProPlayers() == 0) {
+            "No Pro Players"
+        } else {
+            formatListString(players.filter { player -> player.isPlayerPro })
+        }
 
-
-    //returns number of players that are pro
+    // returns number of players that are pro
     fun numberOfProPlayers(): Int = players.count { player: Player -> player.isPlayerPro }
 
-    //returns number of players that are amateur
+    // returns number of players that are amateur
     fun numberOfAmateurPlayers(): Int = players.count { player: Player -> !player.isPlayerPro }
 
-//methods to run for testing
-    //List by highest to the lowest rating
+// methods to run for testing
+    // List by highest to the lowest rating
     fun listByWorst(players: List<Player?>): List<Player?> {
         return players.sortedBy { it?.playerRating }
     }
 
-    //list by lowest to the highest rating
+    // list by lowest to the highest rating
     fun listByBest(players: List<Player?>): List<Player?> {
         return players.sortedByDescending { it?.playerRating }
     }
 
+    // List by highest to the lowest rated players
+    fun listByLeast() = players.sortBy { it.playerRating }.toString()
 
-    //List by highest to the lowest rated players
-    fun listByLeast() = players.sortBy { it.playerRating}.toString()
-    //list by lowest to the highest prated players
-    fun listByMost() = players.sortByDescending { it.playerRating}.toString()
+    // list by lowest to the highest prated players
+    fun listByMost() = players.sortByDescending { it.playerRating }.toString()
 
-
-
-    fun searchMatchesByMins(searchString: String): String {
-        return if (numberOfPlayers() == 0) "No players stored"
-        else {
+    fun searchMatchesByMinutes(searchString: String): String {
+        return if (numberOfPlayers() == 0) {
+            "No players stored"
+        } else {
             var listOfPlayers = ""
             for (player in players) {
                 for (match in player.matches) {
@@ -154,29 +135,30 @@ class PlayerAPI (serializerType: Serializer){
                     }
                 }
             }
-            if (listOfPlayers == "") "No matches found for: $searchString"
-            else listOfPlayers
+            if (listOfPlayers == "") {
+                "No matches found for: $searchString"
+            } else {
+                listOfPlayers
+            }
         }
     }
-
-
 
     //  listing matches
 
     fun listToPlayMatches(): String =
-        if (numberOfPlayers() == 0) "No players stored"
-        else {
+        if (numberOfPlayers() == 0) {
+            "No players stored"
+        } else {
             var listOfToMatches = ""
             for (player in players) {
                 for (match in player.matches) {
                     if (!match.matchWon) {
-                        listOfToMatches+= player.playerName + ": " + match.minPlayed + " minutes played"+ "\n"
+                        listOfToMatches += player.playerName + ": " + match.minPlayed + " minutes played" + "\n"
                     }
                 }
             }
             listOfToMatches
         }
-
 
     //  counting for matches
 
@@ -192,54 +174,41 @@ class PlayerAPI (serializerType: Serializer){
         return numberOfMatchesToPlay
     }
 
-
-   fun playersSixtyMins(): String {
-       var playersSixty = ""
-       for (player in players) {
-           for (match in player.matches) {
-               if (match.minPlayed > 60) {
-                   playersSixty += player.toString()
-               }
-           }
-       }
-       return playersSixty
-   }
-
-
+    fun playersSixtyMinutes(): String {
+        var playersSixty = ""
+        for (player in players) {
+            for (match in player.matches) {
+                if (match.minPlayed > 60) {
+                    playersSixty += player.toString()
+                }
+            }
+        }
+        return playersSixty
+    }
 
     fun suggestPro(): String {
         var suggestPro = ""
         for (player in players) {
-            if(player.playerRating >= 7)
-            for (match in player.matches) {
-                if (match.minPlayed > 45 && match.matchWon) {
-                    suggestPro += player.toString()
+            if (player.playerRating >= 7) {
+                for (match in player.matches) {
+                    if (match.minPlayed > 45 && match.matchWon) {
+                        suggestPro += player.toString()
+                    }
                 }
             }
         }
         return suggestPro
     }
 
+
+    @Suppress("UNCHECKED_CAST")
     @Throws(Exception::class)
     fun load() {
-        players= serializer.read() as ArrayList<Player>
+        players = serializer.read() as ArrayList<Player>
     }
 
     @Throws(Exception::class)
     fun store() {
         serializer.write(players)
     }
-
-
-
 }
-
-
-
-
-
-
-
-
-
-

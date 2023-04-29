@@ -1,16 +1,15 @@
 package models
 
-data class Match (
+data class Match(
     var matchId: Int = 0,
-    var minPlayed : Int,
-    var matchWon:Boolean = false){
+    var minPlayed: Int,
+    var matchWon: Boolean = false
+) {
 
     override fun toString() =
-        if (matchWon)
-            "$matchId: $minPlayed mins (Won)"
-        else
-            "$matchId: $minPlayed mins (Lost)"
-
+        if (matchWon) {
+            "$matchId: $minPlayed minutes (Won)"
+        } else {
+            "$matchId: $minPlayed minutes (Lost)"
+        }
 }
-
-

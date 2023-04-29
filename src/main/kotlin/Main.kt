@@ -1,32 +1,23 @@
 import controllers.PlayerAPI
-import models.Player
 import models.Match
-import mu.KotlinLogging
+import models.Player
 import persistence.XMLSerializer
 import utils.ScannerInput.readNextChar
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.io.File
-import java.lang.System.exit
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import kotlin.system.exitProcess
 
 
-private val logger = KotlinLogging.logger {}
 private val playerAPI = PlayerAPI(XMLSerializer(File("players.xml")))
 
-//private val PlayerAPI = PlayerAPI(JSONSerializer(File("players.json")))
+// private val PlayerAPI = PlayerAPI(JSONSerializer(File("players.json")))
 
-
-
-
-fun main(args: Array<String>) {
+fun main() {
     runMenu()
 }
-
-    val scanner = Scanner(System.`in`)
-
 
 
 fun mainMenu() = readNextInt(
@@ -68,15 +59,13 @@ fun mainMenu() = readNextInt(
          > ==>> """.trimMargin(">")
 )
 
-
-
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
-            1  -> addPlayer()
-            2  -> listPlayers()
-            3  -> updatePlayer()
-            4  -> deletePlayer()
+            1 -> addPlayer()
+            2 -> listPlayers()
+            3 -> updatePlayer()
+            4 -> deletePlayer()
             5 -> turnPro()
             6 -> addMatchToPlayer()
             7 -> updateMatchContentsInPlayer()
@@ -88,7 +77,7 @@ fun runMenu() {
             13 -> listWorstBest()
             14 -> searchMatches()
             15 -> listLostMatches()
-            16 -> recSixtyMins()
+            16 -> recSixtyMinutes()
             17 -> suggestPros()
             18 -> countProAmateurs()
             20 -> save()
@@ -99,9 +88,8 @@ fun runMenu() {
     } while (true)
 }
 
-
 fun addPlayer(): String {
-    //logger.info { "addPlayer() function invoked" }
+    // logger.info { "addPlayer() function invoked" }
     val playerName = readNextLine("Enter the players name: ")
 
     val dateFormat = SimpleDateFormat("DD-MM-YYYY")
@@ -124,7 +112,6 @@ fun addPlayer(): String {
         }
     }
 }
-
 
 fun listPlayers() {
     if (playerAPI.numberOfPlayers() > 0) {
@@ -153,8 +140,6 @@ fun listAllPlayers() = println(playerAPI.listAllPlayers())
 fun listProPlayers() = println(playerAPI.listProPlayers())
 fun listAmateurPlayers() = println(playerAPI.listAmateurPlayers())
 
-
-
 fun updatePlayer() {
     listPlayers()
     if (playerAPI.numberOfPlayers() > 0) {
@@ -165,9 +150,8 @@ fun updatePlayer() {
             val playerDOB = readNextLine("Enter Players DOB ( DD-MM-YYYY ): ")
             val playerRating = readNextInt("Enter a rating for Player ( 1-10 ): ")
 
-
             // pass the index of the player and details and a go to playerAPI for updating and check for success.
-            if (playerAPI.update(id, Player(0, playerName, playerDOB, playerRating , false))){
+            if (playerAPI.update(id, Player(0, playerName, playerDOB, playerRating, false))) {
                 println("Update Successful")
             } else {
                 println("Update Failed")
@@ -177,7 +161,6 @@ fun updatePlayer() {
         }
     }
 }
-
 
 fun deletePlayer() {
     listPlayers()
@@ -197,7 +180,7 @@ fun deletePlayer() {
 fun turnPro() {
     listAmateurPlayers()
     if (playerAPI.numberOfAmateurPlayers() > 0) {
-        // only ask the user to choose the player to turn pro if AMateur players exist
+        // only ask the user to choose the player to turn pro if Amateur players exist
         val id = readNextInt("Enter the id of the player to turn pro: ")
         // pass the index of the player to playerAPI  and check for success.
         if (playerAPI.turnPro(id)) {
@@ -208,7 +191,6 @@ fun turnPro() {
     }
 }
 
-
 fun searchPlayers() {
     val searchName = readNextLine("Enter the name to search by: ")
     val searchResults = playerAPI.searchPlayerByName(searchName)
@@ -218,7 +200,6 @@ fun searchPlayers() {
         println(searchResults)
     }
 }
-
 
 fun searchDOB() {
     val searchDOB = readNextLine("Enter a Date (DD-MM-YYYY): ")
@@ -232,11 +213,11 @@ fun searchDOB() {
             println(searchResults)
         }
     } catch (e: ParseException) {
-        println("Invalid date") //stackOverflow to catch incorrect date input when going from string to date input
+        println("Invalid date") // stackOverflow to catch incorrect date input when going from string to date input
     }
 }
 
-//HELPER FUNCTIONS
+// HELPER FUNCTIONS
 
 private fun askUserToChooseAmateurPlayer(): Player? {
     listAmateurPlayers()
@@ -246,18 +227,16 @@ private fun askUserToChooseAmateurPlayer(): Player? {
             if (player.isPlayerPro) {
                 println("Player is Pro")
             } else {
-                return player //chosen player is amateur
+                return player // chosen player is amateur
             }
         } else {
             println("Player id is not valid")
         }
     }
-    return null //selected player is pro
+    return null // selected player is pro
 }
 
-
-
-fun listAboveRating(){
+fun listAboveRating() {
     val searchRating = readNextInt("Enter rating to search by: ")
     val searchResults = playerAPI.aboveRating(searchRating)
     if (searchResults.isEmpty()) {
@@ -267,7 +246,7 @@ fun listAboveRating(){
     }
 }
 
-fun listWorstBest(){
+fun listWorstBest() {
     if (playerAPI.numberOfPlayers() > 0) {
         val option = readNextInt(
             """
@@ -275,7 +254,8 @@ fun listWorstBest(){
                   > |   1) List by Highest - Lowest rating     |
                   > |   2) List by Lowest - Highest rating     |
                   > -------------------------------------------
-         > ==>> """.trimMargin(">"))
+         > ==>> """.trimMargin(">")
+        )
 
         when (option) {
             1 -> playerAPI.listByMost()
@@ -288,26 +268,24 @@ fun listWorstBest(){
     }
 }
 
-
-
-
 private fun addMatchToPlayer() {
     val player: Player? = askUserToChooseAmateurPlayer()
     if (player != null) {
-        if (player.addMatch(Match(minPlayed = readNextInt("\t Minutes Played: "))))
+        if (player.addMatch(Match(minPlayed = readNextInt("\t Minutes Played: ")))) {
             println("Add Successful!")
-        else println("Add NOT Successful")
+        } else {
+            println("Add NOT Successful")
+        }
     }
 }
 
-
 fun updateMatchContentsInPlayer() {
-    val player :Player? = askUserToChooseAmateurPlayer()
+    val player: Player? = askUserToChooseAmateurPlayer()
     if (player != null) {
-        val match :Match? = askUserToChooseMatch(player)
+        val match: Match? = askUserToChooseMatch(player)
         if (match != null) {
-            val updatedMins = readNextInt("Enter new minutes played: ")
-            if (player.update(match.matchId, Match(minPlayed = updatedMins))) {
+            val updatedMinutes = readNextInt("Enter new minutes played: ")
+            if (player.update(match.matchId, Match(minPlayed = updatedMinutes))) {
                 println("Minutes played updated")
             } else {
                 println("Minutes played NOT updated")
@@ -318,17 +296,15 @@ fun updateMatchContentsInPlayer() {
     }
 }
 
-private fun askUserToChooseMatch(player :Player): Match? {
-    if (player.numberOfMatches() > 0) {
+private fun askUserToChooseMatch(player: Player): Match? {
+    return if (player.numberOfMatches() > 0) {
         print(player.listMatches())
-        return player.findOne(readNextInt("\nEnter the id of the match: "))
-    }
-    else{
-        println ("No matches for chosen player")
-        return null
+        player.findOne(readNextInt("\nEnter the id of the match: "))
+    } else {
+        println("No matches for chosen player")
+        null
     }
 }
-
 
 fun deleteAMatch() {
     val player: Player? = askUserToChooseAmateurPlayer()
@@ -350,23 +326,24 @@ fun markMatchStatus() {
     if (player != null) {
         val match: Match? = askUserToChooseMatch(player)
         if (match != null) {
-            var changeStatus = 'X'
+            val changeStatus: Char
             if (match.matchWon) {
                 changeStatus = readNextChar("The match has been won, Mark as Complete? (Y)")
-                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                if ((changeStatus == 'Y') || (changeStatus == 'y')) {
                     match.matchWon = false
-            }
-            else {
+                }
+            } else {
                 changeStatus = readNextChar("The match has been lost, mark as complete?? (Y)")
-                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                if ((changeStatus == 'Y') || (changeStatus == 'y')) {
                     match.matchWon = true
+                }
             }
         }
     }
 }
 fun searchMatches() {
-    val searchMins = readNextLine("Enter the minutes played to search by: ")
-    val searchResults = playerAPI.searchMatchesByMins(searchMins)
+    val searchMinutes = readNextLine("Enter the minutes played to search by: ")
+    val searchResults = playerAPI.searchMatchesByMinutes(searchMinutes)
     if (searchResults.isEmpty()) {
         println("No matches found")
     } else {
@@ -374,45 +351,32 @@ fun searchMatches() {
     }
 }
 
-
-
-fun countProAmateurs(){
+fun countProAmateurs() {
     println("Pros : ${playerAPI.numberOfProPlayers()}")
     println("Amateurs : ${playerAPI.numberOfAmateurPlayers()}")
 }
 
-
-
-
-
-fun listLostMatches(){
+fun listLostMatches() {
     if (playerAPI.numberOfMatchesWon() > 0) {
         println("Total Lost matches: ${playerAPI.numberOfMatchesWon()}")
     }
     println(playerAPI.listToPlayMatches())
 }
 
-fun recSixtyMins(){
-    if(playerAPI.numberOfPlayers()>0){
-
-        println("Players with more than 60 mins played: \n ${playerAPI.playersSixtyMins()} ")
+fun recSixtyMinutes() {
+    if (playerAPI.numberOfPlayers() > 0) {
+        println("Players with more than 60 Minutes played: \n ${playerAPI.playersSixtyMinutes()} ")
+    } else {
+        println("No players")
     }
-    else
-println("No players")
 }
 
-
-fun suggestPros(){
-    if(playerAPI.numberOfPlayers()>0){
-
+fun suggestPros() {
+    if (playerAPI.numberOfPlayers() > 0) {
         println("Suggestions to turn pro: \n ${playerAPI.suggestPro()} ")
     }
     println("No players")
 }
-
-
-
-
 
 fun save() {
     try {
@@ -430,27 +394,7 @@ fun load() {
     }
 }
 
-
-
-
-fun exitApp(){
-        println("Exiting...bye")
-        exit(0)
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+fun exitApp() {
+    println("Exiting...bye")
+    exitProcess(0)
+}

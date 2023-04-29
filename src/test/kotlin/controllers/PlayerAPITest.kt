@@ -2,15 +2,15 @@ package controllers
 
 import models.Match
 import models.Player
-import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.assertTrue
-import persistence.JSONSerializer
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 import persistence.XMLSerializer
 import java.io.File
-import java.text.SimpleDateFormat
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
-import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class PlayerAPITest {
 
@@ -24,13 +24,13 @@ class PlayerAPITest {
 
     @BeforeEach
     fun setup() {
-        peter = Player(0,"Peter Woods", "11-09-2002", 9, false)
-        james = Player(1,"James Power", "13-02-2000", 8, false)
-        joe = Player(2,"Joe Doe", "02-04-2003", 7, false)
-        bob = Player(3,"Bob Builder", "22-10-1999", 6, false)
-        mary = Player(4,"Mary Daly", "30-09-1998", 7, false)
+        peter = Player(0, "Peter Woods", "11-09-2002", 9, false)
+        james = Player(1, "James Power", "13-02-2000", 8, false)
+        joe = Player(2, "Joe Doe", "02-04-2003", 7, false)
+        bob = Player(3, "Bob Builder", "22-10-1999", 6, false)
+        mary = Player(4, "Mary Daly", "30-09-1998", 7, false)
 
-        //adding 5 players to the players api
+        // adding 5 players to the players api
         populatedPlayers!!.add(peter!!)
         populatedPlayers!!.add(james!!)
         populatedPlayers!!.add(joe!!)
@@ -54,7 +54,7 @@ class PlayerAPITest {
 
         @Test
         fun `adding a Player to a populated list adds to ArrayList`() {
-            val newPlayer = Player(1,"Leo Messi", "10-08-1993", 10, false)
+            val newPlayer = Player(1, "Leo Messi", "10-08-1993", 10, false)
             assertEquals(5, populatedPlayers!!.numberOfPlayers())
             assertTrue(populatedPlayers!!.add(newPlayer))
             assertEquals(6, populatedPlayers!!.numberOfPlayers())
@@ -63,14 +63,13 @@ class PlayerAPITest {
 
         @Test
         fun `adding a Player to an empty list adds to ArrayList`() {
-            val newPlayer = Player(1,"Leo Messi", "10-08-1993", 10, false)
+            val newPlayer = Player(1, "Leo Messi", "10-08-1993", 10, false)
             assertEquals(0, emptyPlayers!!.numberOfPlayers())
             assertTrue(emptyPlayers!!.add(newPlayer))
             assertEquals(1, emptyPlayers!!.numberOfPlayers())
             assertEquals(newPlayer, emptyPlayers!!.findPlayer(emptyPlayers!!.numberOfPlayers()))
         }
     }
-
 
     @Nested
     inner class ListPlayers {
@@ -96,10 +95,10 @@ class PlayerAPITest {
         fun testListByBest() {
             // Create a list of players
             val players = listOf(
-               bob,
+                bob,
                 james,
                 joe,
-               peter
+                peter
             )
 
             // Sort the players by rating best to worst
@@ -109,8 +108,6 @@ class PlayerAPITest {
                 joe,
                 bob
             )
-
-
 
             // Call the listByBest function
             val actual = populatedPlayers!!.listByBest(players)
@@ -131,7 +128,10 @@ class PlayerAPITest {
 
             // Sort the players by rating best to worst
             val expected = listOf(
-                bob,joe,james,peter
+                bob,
+                joe,
+                james,
+                peter
             )
 
             // Call the listByWorst function
@@ -141,10 +141,8 @@ class PlayerAPITest {
             assertEquals(expected, actual)
         }
 
-
-
         @Test
-        fun `test for listing all players who played over 60 mins`() {
+        fun `test for listing all players who played over 60 minutes`() {
             // Create a list of players
             val match1 = Match(0, 45, false)
             val match2 = Match(0, 66, false)
@@ -158,17 +156,16 @@ class PlayerAPITest {
 
             val isAdded = populatedPlayers!!.add(newPlayer)
             val isAdded2 = populatedPlayers!!.add(newPlayer2)
-            val actual = populatedPlayers!!.playersSixtyMins()
-
-
+            val actual = populatedPlayers!!.playersSixtyMinutes()
 
             assertTrue(isAdded)
             assertTrue(isAdded2)
-            assertEquals("6: Leo Messi, DOB(10-08-1993), Rating(10), PRO(N) \n" +
-                    "\t0: 45 mins (Lost)\n" +
-                    "\t0: 66 mins (Lost)", actual)
-
-
+            assertEquals(
+                "6: Leo Messi, DOB(10-08-1993), Rating(10), PRO(N) \n" +
+                    "\t0: 45 minutes (Lost)\n" +
+                    "\t0: 66 minutes (Lost)",
+                actual
+            )
         }
 
         @Test
@@ -188,44 +185,38 @@ class PlayerAPITest {
             val isAdded2 = populatedPlayers!!.add(newPlayer2)
             val actual = populatedPlayers!!.suggestPro()
 
-
-
             assertTrue(isAdded)
             assertTrue(isAdded2)
-            assertEquals("6: Leo Messi, DOB(10-08-1993), Rating(10), PRO(N) \n" +
-                    "\t0: 76 mins (Won)\n" +
-                    "\t0: 66 mins (Lost)", actual)
-
-
+            assertEquals(
+                "6: Leo Messi, DOB(10-08-1993), Rating(10), PRO(N) \n" +
+                    "\t0: 76 minutes (Won)\n" +
+                    "\t0: 66 minutes (Lost)",
+                actual
+            )
         }
-
-
-
     }
 
     @Nested
-    inner class SearchPlayers{
+    inner class SearchPlayers {
 
         @Test
-        fun SearchPlayerByDOB() {
-
+        fun searchPlayerByDOB() {
             val searchDate1 = "01-01-1990"
             val searchResult1 = populatedPlayers?.searchPlayerByDOB(searchDate1)
             val searchDate2 = "01-01-2005"
             val searchResult2 = populatedPlayers?.searchPlayerByDOB(searchDate2)
 
-
-            assertEquals("1: Peter Woods 11-09-2002 \n" +
+            assertEquals(
+                "1: Peter Woods 11-09-2002 \n" +
                     "2: James Power 13-02-2000 \n" +
                     "3: Joe Doe 02-04-2003 \n" +
                     "4: Bob Builder 22-10-1999 \n" +
-                    "5: Mary Daly 30-09-1998 \n", searchResult1)
+                    "5: Mary Daly 30-09-1998 \n",
+                searchResult1
+            )
             assertEquals("No matches found for: 01-01-2005", searchResult2)
         }
-
-
     }
-
 
     @Nested
     inner class DeletePlayers {
@@ -233,40 +224,39 @@ class PlayerAPITest {
         @Test
         fun `deleting a Player that does not exist, returns false`() {
             assertFalse { (emptyPlayers!!.delete(0)) }
-            assertFalse {(populatedPlayers!!.delete(-1))}
-            assertFalse {(populatedPlayers!!.delete(6))}
+            assertFalse { (populatedPlayers!!.delete(-1)) }
+            assertFalse { (populatedPlayers!!.delete(6)) }
         }
 
         @Test
         fun `deleting a Player that exists delete and returns deleted object`() {
             assertEquals(5, populatedPlayers!!.numberOfPlayers())
-          populatedPlayers!!.delete(1)
+            populatedPlayers!!.delete(1)
             assertEquals(4, populatedPlayers!!.numberOfPlayers())
-         populatedPlayers!!.delete(2)
+            populatedPlayers!!.delete(2)
             assertEquals(3, populatedPlayers!!.numberOfPlayers())
         }
     }
 
-
     @Nested
     inner class UpdatePlayers {
         @Test
-        fun `updating a Player that does not exist returns false`(){
-            assertFalse(populatedPlayers!!.update(6, Player(6,"Updating Player", "01-01-2000", 8, false)))
-            assertFalse(populatedPlayers!!.update(-1, Player(-1,"Updating Player", "01-01-2000", 8, false)))
-            assertFalse(emptyPlayers!!.update(0, Player(0,"Updating Player", "01-01-2000", 8, false)))
+        fun `updating a Player that does not exist returns false`() {
+            assertFalse(populatedPlayers!!.update(6, Player(6, "Updating Player", "01-01-2000", 8, false)))
+            assertFalse(populatedPlayers!!.update(-1, Player(-1, "Updating Player", "01-01-2000", 8, false)))
+            assertFalse(emptyPlayers!!.update(0, Player(0, "Updating Player", "01-01-2000", 8, false)))
         }
 
         @Test
         fun `updating a Player that exists returns true and updates`() {
-            //check Player 1 exists and check the contents
+            // check Player 1 exists and check the contents
             assertEquals(peter, populatedPlayers!!.findPlayer(1))
             assertEquals("Peter Woods", populatedPlayers!!.findPlayer(1)!!.playerName)
             assertEquals("11-09-2002", populatedPlayers!!.findPlayer(1)!!.playerDOB)
             assertEquals(9, populatedPlayers!!.findPlayer(1)!!.playerRating)
 
-            //update Player 1 with new information and ensure contents updated successfully
-            assertTrue(populatedPlayers!!.update(1, Player(1,"Peter Wood", "11-09-2004", 8, false)))
+            // update Player 1 with new information and ensure contents updated successfully
+            assertTrue(populatedPlayers!!.update(1, Player(1, "Peter Wood", "11-09-2004", 8, false)))
             assertEquals(peter, populatedPlayers!!.findPlayer(1))
             assertEquals("Peter Wood", populatedPlayers!!.findPlayer(1)!!.playerName)
             assertEquals("11-09-2004", populatedPlayers!!.findPlayer(1)?.playerDOB)
@@ -279,22 +269,21 @@ class PlayerAPITest {
 
         @Test
         fun numberOfPlayersCalculatedCorrectly() {
-            Assertions.assertEquals(5, populatedPlayers!!.numberOfPlayers())
-            Assertions.assertEquals(0, emptyPlayers!!.numberOfPlayers())
+            assertEquals(5, populatedPlayers!!.numberOfPlayers())
+            assertEquals(0, emptyPlayers!!.numberOfPlayers())
         }
 
         @Test
         fun numberOfProPlayersCalculatedCorrectly() {
-            Assertions.assertEquals(0, populatedPlayers!!.numberOfProPlayers())
-            Assertions.assertEquals(0, emptyPlayers!!.numberOfProPlayers())
+            assertEquals(0, populatedPlayers!!.numberOfProPlayers())
+            assertEquals(0, emptyPlayers!!.numberOfProPlayers())
         }
 
         @Test
         fun numberOfAmateurPlayersCalculatedCorrectly() {
-            Assertions.assertEquals(5, populatedPlayers!!.numberOfAmateurPlayers())
-            Assertions.assertEquals(0, emptyPlayers!!.numberOfAmateurPlayers())
+            assertEquals(5, populatedPlayers!!.numberOfAmateurPlayers())
+            assertEquals(0, emptyPlayers!!.numberOfAmateurPlayers())
         }
-
 
         @Test
         fun numberOfMatchesWonCountedCorrectly() {
@@ -307,16 +296,12 @@ class PlayerAPITest {
             val isAdded2 = populatedPlayers!!.add(newPlayer2)
             assertTrue(isAdded2)
 
-
-
-            Assertions.assertEquals(1, populatedPlayers!!.numberOfMatchesWon())
-            Assertions.assertEquals(0, emptyPlayers!!.numberOfAmateurPlayers())
+            assertEquals(1, populatedPlayers!!.numberOfMatchesWon())
+            assertEquals(0, emptyPlayers!!.numberOfAmateurPlayers())
         }
     }
 
-
-
-        @Nested
+    @Nested
     inner class PersistenceTests {
 
         @Test
@@ -325,11 +310,11 @@ class PlayerAPITest {
             val storingPlayers = PlayerAPI(XMLSerializer(File("players.xml")))
             storingPlayers.store()
 
-            //Loading the empty players.xml file into a new object
+            // Loading the empty players.xml file into a new object
             val loadedPlayers = PlayerAPI(XMLSerializer(File("players.xml")))
             loadedPlayers.load()
 
-            //Comparing the source of the players (storingPlayers) with the XML loaded players (loadedPlayers)
+            // Comparing the source of the players (storingPlayers) with the XML loaded players (loadedPlayers)
             assertEquals(0, storingPlayers.numberOfPlayers())
             assertEquals(0, loadedPlayers.numberOfPlayers())
             assertEquals(storingPlayers.numberOfPlayers(), loadedPlayers.numberOfPlayers())
@@ -344,11 +329,11 @@ class PlayerAPITest {
             storingPlayers.add(bob!!)
             storingPlayers.store()
 
-            //Loading players.xml into a different collection
+            // Loading players.xml into a different collection
             val loadedPlayers = PlayerAPI(XMLSerializer(File("players.xml")))
             loadedPlayers.load()
 
-            //Comparing the source of the players (storingPlayers) with the XML loaded players (loadedPlayers)
+            // Comparing the source of the players (storingPlayers) with the XML loaded players (loadedPlayers)
             assertEquals(3, storingPlayers.numberOfPlayers())
             assertEquals(3, loadedPlayers.numberOfPlayers())
             assertEquals(storingPlayers.numberOfPlayers(), loadedPlayers.numberOfPlayers())
@@ -378,7 +363,7 @@ class PlayerAPITest {
             }
 
             @Test
-            fun `saving and loading an loaded collection in JSON doesn't loose data`() {
+            fun `saving and loading a loaded collection in JSON doesn't lose data`() {
                 // Storing 3 players to the players.JSON file.
                 val storingPlayers = PlayerAPI(JSONSerializer(File("players.JSON")))
                 storingPlayers.add(peter!!)
@@ -401,13 +386,4 @@ class PlayerAPITest {
         }
 */
     }
-
-
-
-
-
-
-
 }
-
-
