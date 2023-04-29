@@ -208,14 +208,16 @@ class PlayerAPITest {
 
             assertEquals(
                 "1: Peter Woods 11-09-2002 \n" +
-                    "2: James Power 13-02-2000 \n" +
-                    "3: Joe Doe 02-04-2003 \n" +
-                    "4: Bob Builder 22-10-1999 \n" +
-                    "5: Mary Daly 30-09-1998 \n",
+                        "2: James Power 13-02-2000 \n" +
+                        "3: Joe Doe 02-04-2003 \n" +
+                        "4: Bob Builder 22-10-1999 \n" +
+                        "5: Mary Daly 30-09-1998 \n",
                 searchResult1
             )
             assertEquals("No matches found for: 01-01-2005", searchResult2)
         }
+
+
     }
 
     @Nested

@@ -2,6 +2,7 @@ package persistence
 
 import com.thoughtworks.xstream.XStream
 import com.thoughtworks.xstream.io.xml.DomDriver
+import models.Match
 import models.Player
 import java.io.File
 import java.io.FileReader
@@ -15,6 +16,7 @@ class XMLSerializer(private val file: File) : Serializer {
     override fun read(): Any {
         val xStream = XStream(DomDriver())
         xStream.allowTypes(arrayOf(Player::class.java))
+        xStream.allowTypes(arrayOf(Match::class.java))
         val inputStream = xStream.createObjectInputStream(FileReader(file))
         val obj = inputStream.readObject() as Any
         inputStream.close()
