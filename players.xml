@@ -18,5 +18,20 @@
       <matches class="linked-hash-set"/>
       <lastMatchId>0</lastMatchId>
     </models.Player>
+    <models.Player>
+      <playerId>3</playerId>
+      <playerName>Lionel Messi</playerName>
+      <playerDOB>01-03-1995</playerDOB>
+      <playerRating>10</playerRating>
+      <isPlayerPro>false</isPlayerPro>
+      <matches class="linked-hash-set">
+        <models.Match>
+          <matchId>0</matchId>
+          <minPlayed>75</minPlayed>
+          <matchWon>true</matchWon>
+        </models.Match>
+      </matches>
+      <lastMatchId>1</lastMatchId>
+    </models.Player>
   </list>
 </object-stream>
