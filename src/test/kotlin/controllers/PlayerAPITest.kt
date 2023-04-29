@@ -217,6 +217,21 @@ class PlayerAPITest {
             assertEquals("No matches found for: 01-01-2005", searchResult2)
         }
 
+        @Test
+        fun serachPlayerByName() {
+            val searchName1 = "Peter"
+            val searchResult1 = populatedPlayers?.searchPlayerByName(searchName1)
+            val searchName2 = "Mary"
+            val searchResult2 = populatedPlayers?.searchPlayerByName(searchName2)
+
+            assertEquals(
+                "1: Peter Woods, DOB(11-09-2002), Rating(9), PRO(N) \n" +
+                        "\tNO MATCHES ADDED",
+                searchResult1
+            )
+            assertEquals("5: Mary Daly, DOB(30-09-1998), Rating(7), PRO(N) \n" +
+                    "\tNO MATCHES ADDED", searchResult2)
+        }
 
     }
 
