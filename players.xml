@@ -4,25 +4,25 @@
       <playerId>1</playerId>
       <playerName>Peter Woods</playerName>
       <playerDOB>11-09-2002</playerDOB>
-      <playerRating>6</playerRating>
+      <playerRating>9</playerRating>
       <isPlayerPro>false</isPlayerPro>
       <matches class="linked-hash-set"/>
       <lastMatchId>0</lastMatchId>
     </models.Player>
     <models.Player>
       <playerId>2</playerId>
-      <playerName>Lionel Messi</playerName>
-      <playerDOB>08-22-1990</playerDOB>
-      <playerRating>10</playerRating>
+      <playerName>James Power</playerName>
+      <playerDOB>13-02-2000</playerDOB>
+      <playerRating>8</playerRating>
       <isPlayerPro>false</isPlayerPro>
       <matches class="linked-hash-set"/>
       <lastMatchId>0</lastMatchId>
     </models.Player>
     <models.Player>
       <playerId>3</playerId>
-      <playerName>Ronaldo</playerName>
-      <playerDOB>11-08-1991</playerDOB>
-      <playerRating>10</playerRating>
+      <playerName>Bob Builder</playerName>
+      <playerDOB>22-10-1999</playerDOB>
+      <playerRating>6</playerRating>
       <isPlayerPro>false</isPlayerPro>
       <matches class="linked-hash-set"/>
       <lastMatchId>0</lastMatchId>

@@ -58,7 +58,7 @@ class PlayerAPITest {
             assertEquals(5, populatedPlayers!!.numberOfPlayers())
             assertTrue(populatedPlayers!!.add(newPlayer))
             assertEquals(6, populatedPlayers!!.numberOfPlayers())
-            assertEquals(newPlayer, populatedPlayers!!.findPlayer(populatedPlayers!!.numberOfPlayers() - 1))
+            assertEquals(newPlayer, populatedPlayers!!.findPlayer(populatedPlayers!!.numberOfPlayers()))
         }
 
         @Test
@@ -67,7 +67,7 @@ class PlayerAPITest {
             assertEquals(0, emptyPlayers!!.numberOfPlayers())
             assertTrue(emptyPlayers!!.add(newPlayer))
             assertEquals(1, emptyPlayers!!.numberOfPlayers())
-            assertEquals(newPlayer, emptyPlayers!!.findPlayer(emptyPlayers!!.numberOfPlayers() - 1))
+            assertEquals(newPlayer, emptyPlayers!!.findPlayer(emptyPlayers!!.numberOfPlayers()))
         }
     }
 
@@ -159,7 +159,7 @@ class PlayerAPITest {
             val isAdded = populatedPlayers!!.add(newPlayer)
             val isAdded2 = populatedPlayers!!.add(newPlayer2)
             val actual = populatedPlayers!!.playersSixtyMins()
-            val expected = listOf(populatedPlayers)
+
 
 
             assertTrue(isAdded)
@@ -187,7 +187,7 @@ class PlayerAPITest {
             val isAdded = populatedPlayers!!.add(newPlayer)
             val isAdded2 = populatedPlayers!!.add(newPlayer2)
             val actual = populatedPlayers!!.suggestPro()
-            val expected = listOf(populatedPlayers)
+
 
 
             assertTrue(isAdded)
@@ -215,11 +215,11 @@ class PlayerAPITest {
             val searchResult2 = populatedPlayers?.searchPlayerByDOB(searchDate2)
 
 
-            assertEquals("0: Peter Woods 11-09-2002 \n" +
-                    "1: James Power 13-02-2000 \n" +
-                    "2: Joe Doe 02-04-2003 \n" +
-                    "3: Bob Builder 22-10-1999 \n" +
-                    "4: Mary Daly 30-09-1998 \n", searchResult1)
+            assertEquals("1: Peter Woods 11-09-2002 \n" +
+                    "2: James Power 13-02-2000 \n" +
+                    "3: Joe Doe 02-04-2003 \n" +
+                    "4: Bob Builder 22-10-1999 \n" +
+                    "5: Mary Daly 30-09-1998 \n", searchResult1)
             assertEquals("No matches found for: 01-01-2005", searchResult2)
         }
 
@@ -234,15 +234,15 @@ class PlayerAPITest {
         fun `deleting a Player that does not exist, returns false`() {
             assertFalse { (emptyPlayers!!.delete(0)) }
             assertFalse {(populatedPlayers!!.delete(-1))}
-            assertFalse {(populatedPlayers!!.delete(5))}
+            assertFalse {(populatedPlayers!!.delete(6))}
         }
 
         @Test
         fun `deleting a Player that exists delete and returns deleted object`() {
             assertEquals(5, populatedPlayers!!.numberOfPlayers())
-          populatedPlayers!!.delete(0)
+          populatedPlayers!!.delete(1)
             assertEquals(4, populatedPlayers!!.numberOfPlayers())
-         populatedPlayers!!.delete(1)
+         populatedPlayers!!.delete(2)
             assertEquals(3, populatedPlayers!!.numberOfPlayers())
         }
     }
@@ -260,16 +260,17 @@ class PlayerAPITest {
         @Test
         fun `updating a Player that exists returns true and updates`() {
             //check Player 1 exists and check the contents
-            assertEquals(peter, populatedPlayers!!.findPlayer(0))
-            assertEquals("Peter Woods", populatedPlayers!!.findPlayer(0)!!.playerName)
-            assertEquals("11-09-2002", populatedPlayers!!.findPlayer(0)!!.playerDOB)
-            assertEquals(9, populatedPlayers!!.findPlayer(0)!!.playerRating)
+            assertEquals(peter, populatedPlayers!!.findPlayer(1))
+            assertEquals("Peter Woods", populatedPlayers!!.findPlayer(1)!!.playerName)
+            assertEquals("11-09-2002", populatedPlayers!!.findPlayer(1)!!.playerDOB)
+            assertEquals(9, populatedPlayers!!.findPlayer(1)!!.playerRating)
 
             //update Player 1 with new information and ensure contents updated successfully
-            assertTrue(populatedPlayers!!.update(0, Player(0,"Peter Wood", "11-09-2004", 8, false)))
-            assertEquals("Peter Wood", populatedPlayers!!.findPlayer(0)!!.playerName)
-            assertEquals("11-09-2004", populatedPlayers!!.findPlayer(0)!!.playerDOB)
-            assertEquals(8, populatedPlayers!!.findPlayer(0)!!.playerRating)
+            assertTrue(populatedPlayers!!.update(1, Player(1,"Peter Wood", "11-09-2004", 8, false)))
+            assertEquals(peter, populatedPlayers!!.findPlayer(1))
+            assertEquals("Peter Wood", populatedPlayers!!.findPlayer(1)!!.playerName)
+            assertEquals("11-09-2004", populatedPlayers!!.findPlayer(1)?.playerDOB)
+            assertEquals(8, populatedPlayers!!.findPlayer(1)!!.playerRating)
         }
     }
 
