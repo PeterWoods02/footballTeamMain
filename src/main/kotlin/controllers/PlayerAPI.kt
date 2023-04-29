@@ -208,6 +208,20 @@ class PlayerAPI (serializerType: Serializer){
    }
 
 
+
+    fun suggestPro(): String {
+        var suggestPro = ""
+        for (player in players) {
+            if(player.playerRating >= 7)
+            for (match in player.matches) {
+                if (match.minPlayed > 45 && match.matchWon) {
+                    suggestPro += player.toString()
+                }
+            }
+        }
+        return suggestPro
+    }
+
     @Throws(Exception::class)
     fun load() {
         players= serializer.read() as ArrayList<Player>

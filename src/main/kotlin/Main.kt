@@ -57,7 +57,7 @@ fun mainMenu() = readNextInt(
          > |   14) Search for all matches                      |
          > |   15) List Lost Matches                           |
          > |   16) List players good game time >60             |
-         > |   18) .....                                       |
+         > |   17) Suggest players to turn pro                 |
          > -----------------------------------------------------  
          > |   20) Save to External File                       |
          > |   21) Load from External File                     |
@@ -88,6 +88,7 @@ fun runMenu() {
             14 -> searchMatches()
             15 -> listLostMatches()
             16 -> recSixtyMins()
+            17 -> suggestPros()
             20 -> save()
             21 -> load()
             0 -> exitApp()
@@ -387,8 +388,19 @@ fun recSixtyMins(){
 
         println("Players with more than 60 mins played: \n ${playerAPI.playersSixtyMins()} ")
     }
+    else
 println("No players")
 }
+
+
+fun suggestPros(){
+    if(playerAPI.numberOfPlayers()>0){
+
+        println("Suggestions to turn pro: \n ${playerAPI.suggestPro()} ")
+    }
+    println("No players")
+}
+
 
 
 
