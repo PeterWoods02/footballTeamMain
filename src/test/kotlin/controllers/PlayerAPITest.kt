@@ -171,6 +171,34 @@ class PlayerAPITest {
 
         }
 
+        @Test
+        fun `test for listing all players who should go Pro`() {
+            // Create a list of players
+            val match1 = Match(0, 76, true)
+            val match2 = Match(0, 66, false)
+            val match4 = Match(0, 45, false)
+            val match3 = Match(0, 76, true)
+            val matches = mutableSetOf(match1, match2)
+            val matches2 = mutableSetOf(match3, match4)
+
+            val newPlayer = Player(1, "Leo Messi", "10-08-1993", 10, false, matches)
+            val newPlayer2 = Player(2, "Ronaldo", "10-08-1993", 5, false, matches2)
+
+            val isAdded = populatedPlayers!!.add(newPlayer)
+            val isAdded2 = populatedPlayers!!.add(newPlayer2)
+            val actual = populatedPlayers!!.suggestPro()
+            val expected = listOf(populatedPlayers)
+
+
+            assertTrue(isAdded)
+            assertTrue(isAdded2)
+            assertEquals("6: Leo Messi, DOB(10-08-1993), Rating(10), PRO(N) \n" +
+                    "\t0: 76 mins (Won)\n" +
+                    "\t0: 66 mins (Lost)", actual)
+
+
+        }
+
 
 
     }
