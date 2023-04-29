@@ -58,6 +58,7 @@ fun mainMenu() = readNextInt(
          > |   15) List Lost Matches                           |
          > |   16) List players good game time >60             |
          > |   17) Suggest players to turn pro                 |
+         > |   18) Count number of pros and amateurs           |
          > -----------------------------------------------------  
          > |   20) Save to External File                       |
          > |   21) Load from External File                     |
@@ -89,6 +90,7 @@ fun runMenu() {
             15 -> listLostMatches()
             16 -> recSixtyMins()
             17 -> suggestPros()
+            18 -> countProAmateurs()
             20 -> save()
             21 -> load()
             0 -> exitApp()
@@ -370,6 +372,13 @@ fun searchMatches() {
     } else {
         println(searchResults)
     }
+}
+
+
+
+fun countProAmateurs(){
+    println("Pros : ${playerAPI.numberOfProPlayers()}")
+    println("Amateurs : ${playerAPI.numberOfAmateurPlayers()}")
 }
 
 

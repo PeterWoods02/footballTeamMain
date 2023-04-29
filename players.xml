@@ -1,37 +1,31 @@
 <object-stream>
   <list>
     <models.Player>
-      <playerId>0</playerId>
+      <playerId>1</playerId>
       <playerName>Peter Woods</playerName>
       <playerDOB>11-09-2002</playerDOB>
-      <playerRating>9</playerRating>
-      <isPlayerPro>false</isPlayerPro>
-      <matches class="linked-hash-set"/>
-      <lastMatchId>0</lastMatchId>
-    </models.Player>
-    <models.Player>
-      <playerId>2</playerId>
-      <playerName>Bob Builder</playerName>
-      <playerDOB>22-10-1999</playerDOB>
       <playerRating>6</playerRating>
       <isPlayerPro>false</isPlayerPro>
       <matches class="linked-hash-set"/>
       <lastMatchId>0</lastMatchId>
     </models.Player>
     <models.Player>
-      <playerId>3</playerId>
+      <playerId>2</playerId>
       <playerName>Lionel Messi</playerName>
-      <playerDOB>01-03-1995</playerDOB>
+      <playerDOB>08-22-1990</playerDOB>
       <playerRating>10</playerRating>
       <isPlayerPro>false</isPlayerPro>
-      <matches class="linked-hash-set">
-        <models.Match>
-          <matchId>0</matchId>
-          <minPlayed>75</minPlayed>
-          <matchWon>true</matchWon>
-        </models.Match>
-      </matches>
-      <lastMatchId>1</lastMatchId>
+      <matches class="linked-hash-set"/>
+      <lastMatchId>0</lastMatchId>
+    </models.Player>
+    <models.Player>
+      <playerId>3</playerId>
+      <playerName>Ronaldo</playerName>
+      <playerDOB>11-08-1991</playerDOB>
+      <playerRating>10</playerRating>
+      <isPlayerPro>false</isPlayerPro>
+      <matches class="linked-hash-set"/>
+      <lastMatchId>0</lastMatchId>
     </models.Player>
   </list>
 </object-stream>
