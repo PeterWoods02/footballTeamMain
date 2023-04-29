@@ -52,14 +52,12 @@ fun mainMenu() = readNextInt(
          > |   11) Search by Date of Birth                     |
          > |   12) List above X rating                         |
          > |   13) List from best to worst                     |
-         > |   14) .....                                       |
          > -----------------------------------------------------  
          > | REPORT MENU FOR Matches                           |                                
-         > |   15) Search for all matches                      |
-         > |   16) List Lost Matches                           |
-         > |   17) List players good game time >60             |
+         > |   14) Search for all matches                      |
+         > |   15) List Lost Matches                           |
+         > |   16) List players good game time >60             |
          > |   18) .....                                       |
-         > |   19) .....                                       |
          > -----------------------------------------------------  
          > |   20) Save to External File                       |
          > |   21) Load from External File                     |
@@ -87,9 +85,9 @@ fun runMenu() {
             11 -> searchDOB()
             12 -> listAboveRating()
             13 -> listWorstBest()
-            15 -> searchMatches()
-            16 -> listLostMatches()
-            17 -> recSixtyMins()
+            14 -> searchMatches()
+            15 -> listLostMatches()
+            16 -> recSixtyMins()
             20 -> save()
             21 -> load()
             0 -> exitApp()
