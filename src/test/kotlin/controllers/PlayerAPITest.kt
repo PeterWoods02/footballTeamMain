@@ -273,10 +273,49 @@ class PlayerAPITest {
         }
     }
 
-
-
-
     @Nested
+    inner class CountingMethods {
+
+        @Test
+        fun numberOfPlayersCalculatedCorrectly() {
+            Assertions.assertEquals(5, populatedPlayers!!.numberOfPlayers())
+            Assertions.assertEquals(0, emptyPlayers!!.numberOfPlayers())
+        }
+
+        @Test
+        fun numberOfProPlayersCalculatedCorrectly() {
+            Assertions.assertEquals(0, populatedPlayers!!.numberOfProPlayers())
+            Assertions.assertEquals(0, emptyPlayers!!.numberOfProPlayers())
+        }
+
+        @Test
+        fun numberOfAmateurPlayersCalculatedCorrectly() {
+            Assertions.assertEquals(5, populatedPlayers!!.numberOfAmateurPlayers())
+            Assertions.assertEquals(0, emptyPlayers!!.numberOfAmateurPlayers())
+        }
+
+
+        @Test
+        fun numberOfMatchesWonCountedCorrectly() {
+            // Create a list of players
+
+            val match4 = Match(0, 45, false)
+            val match3 = Match(0, 76, true)
+            val matches2 = mutableSetOf(match3, match4)
+            val newPlayer2 = Player(2, "Ronaldo", "10-08-1993", 5, false, matches2)
+            val isAdded2 = populatedPlayers!!.add(newPlayer2)
+            assertTrue(isAdded2)
+
+
+
+            Assertions.assertEquals(1, populatedPlayers!!.numberOfMatchesWon())
+            Assertions.assertEquals(0, emptyPlayers!!.numberOfAmateurPlayers())
+        }
+    }
+
+
+
+        @Nested
     inner class PersistenceTests {
 
         @Test
