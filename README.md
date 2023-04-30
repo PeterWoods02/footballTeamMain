@@ -1,6 +1,11 @@
 # Player Organiser App
 
-Player Organiser App is a console-based application written in Kotlin that allows you to manage players, including adding, updating, listing, and deleting players.
+Player Organiser App is a console-based application written in Kotlin that allows you to manage players, including adding, updating, listing, and deleting players. You can also add matches to your player and see how many minutes played they had and if they won the game.
+
+## Menu
+
+![menu](https://user-images.githubusercontent.com/94681624/235331884-ca36d5bb-678b-4de8-9ea4-d1c9d290050a.png)
+
 
 ## Features
 
@@ -8,6 +13,20 @@ Player Organiser App is a console-based application written in Kotlin that allow
 - List all players
 - Update an existing player's information
 - Delete a player
+- Add match to player
+- Update match contents
+- Delete matches
+- Mark matches as won
+- Search for players by name
+- Search by Date of birth
+- List players above certain rating
+- list players from best to worst
+- Search for matches
+- List matches that we lost
+- List players who got 60+ mins
+- Suggest players to turn pro
+- Count number of pros and amateurs in team
+
 - Exit the application
 
 ## Prerequisites
