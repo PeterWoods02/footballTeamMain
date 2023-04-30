@@ -258,6 +258,10 @@ fun listWorstBest() {
         )
 
         when (option) {
+            /*
+            1 -> playerAPI.listByBest(playerAPI.getAllPlayers())
+            2 -> playerAPI.listByWorst(playerAPI.getAllPlayers())
+             */
             1 -> playerAPI.listByMost()
             2 -> playerAPI.listByLeast()
             else -> println("Invalid option entered: $option")

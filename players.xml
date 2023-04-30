@@ -4,7 +4,7 @@
       <playerId>1</playerId>
       <playerName>Peter Woods</playerName>
       <playerDOB>11-09-2002</playerDOB>
-      <playerRating>9</playerRating>
+      <playerRating>10</playerRating>
       <isPlayerPro>false</isPlayerPro>
       <matches class="linked-hash-set"/>
       <lastMatchId>0</lastMatchId>
