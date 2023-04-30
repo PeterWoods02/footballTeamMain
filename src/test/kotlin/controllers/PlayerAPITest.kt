@@ -168,6 +168,24 @@ class PlayerAPITest {
         }
 
         @Test
+        fun `test for listing all players above user inputed rating`() {
+
+            val newPlayer = Player(1, "Leo Messi", "10-08-1993", 6, false)
+            val newPlayer2 = Player(2, "Ronaldo", "10-08-1993", 10, false)
+
+            val isAdded = populatedPlayers!!.add(newPlayer)
+            val isAdded2 = populatedPlayers!!.add(newPlayer2)
+
+            assertTrue(isAdded)
+            assertTrue(isAdded2)
+
+            val playersString = populatedPlayers!!.aboveRating(8)
+            assertTrue(playersString.contains("Ronaldo"))
+            assertFalse { playersString.contains("Messi") }
+
+        }
+
+        @Test
         fun `test for listing all players who should go Pro`() {
             // Create a list of players
             val match1 = Match(0, 76, true)
