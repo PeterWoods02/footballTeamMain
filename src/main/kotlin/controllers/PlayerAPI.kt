@@ -34,6 +34,11 @@ class PlayerAPI(serializerType: Serializer) {
         return false
     }
 
+    /* this is for list best to worst and visa versa
+    fun getAllPlayers(): List<Player> {
+        return players.toList()
+    }
+*/
     fun turnPro(id: Int): Boolean {
         val foundPlayer = findPlayer(id)
         if ((foundPlayer != null) && (!foundPlayer.isPlayerPro)
@@ -109,7 +114,7 @@ class PlayerAPI(serializerType: Serializer) {
 // methods to run for testing
     // List by highest to the lowest rating
     fun listByWorst(players: List<Player?>): List<Player?> {
-        return players.sortedBy { it?.playerRating }
+        return players.sortedBy{ it?.playerRating }
     }
 
     // list by lowest to the highest rating

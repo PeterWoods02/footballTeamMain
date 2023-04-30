@@ -25,7 +25,7 @@ class PlayerAPITest {
 
     @BeforeEach
     fun setup() {
-        peter = Player(0, "Peter Woods", "11-09-2002", 9, false)
+        peter = Player(0, "Peter Woods", "11-09-2002", 10, false)
         james = Player(1, "James Power", "13-02-2000", 8, false)
         joe = Player(2, "Joe Doe", "02-04-2003", 7, false)
         bob = Player(3, "Bob Builder", "22-10-1999", 6, false)
@@ -234,6 +234,41 @@ class PlayerAPITest {
 
         }
 
+
+        @Test
+        fun `test for listing highest to lowest rated players`() {
+
+            val playersString = populatedPlayers!!.aboveRating(8)
+            assertTrue(playersString.contains("Peter"))
+            assertFalse { playersString.contains("Mary") }
+
+        }
+
+        @Test
+        fun `test for listing matches needed to win`() {
+            // Create a list of players
+            val match1 = Match(0, 76, true)
+            val match2 = Match(0, 66, true)
+            val match4 = Match(0, 45, false)
+            val match3 = Match(0, 76, true)
+            val matches = mutableSetOf(match1, match2)
+            val matches2 = mutableSetOf(match3, match4)
+
+            val newPlayer = Player(1, "Leo Messi", "10-08-1993", 10, false, matches)
+            val newPlayer2 = Player(2, "Ronaldo", "10-08-1993", 5, false, matches2)
+
+            val isAdded = populatedPlayers!!.add(newPlayer)
+            val isAdded2 = populatedPlayers!!.add(newPlayer2)
+
+            assertTrue(isAdded)
+            assertTrue(isAdded2)
+
+            val playersString = populatedPlayers!!.listToPlayMatches().lowercase()
+            assertTrue(playersString.contains("ronaldo"))
+            assertFalse { playersString.contains("messi") }
+
+        }
+
     }
 
     @Nested
@@ -350,7 +385,7 @@ class PlayerAPITest {
             assertEquals(peter, populatedPlayers!!.findPlayer(1))
             assertEquals("Peter Woods", populatedPlayers!!.findPlayer(1)!!.playerName)
             assertEquals("11-09-2002", populatedPlayers!!.findPlayer(1)!!.playerDOB)
-            assertEquals(9, populatedPlayers!!.findPlayer(1)!!.playerRating)
+            assertEquals(10, populatedPlayers!!.findPlayer(1)!!.playerRating)
 
             // update Player 1 with new information and ensure contents updated successfully
             assertTrue(populatedPlayers!!.update(1, Player(1, "Peter Wood", "11-09-2004", 8, false)))
