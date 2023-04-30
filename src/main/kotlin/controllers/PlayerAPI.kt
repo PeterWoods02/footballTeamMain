@@ -114,7 +114,7 @@ class PlayerAPI(serializerType: Serializer) {
 // methods to run for testing
     // List by highest to the lowest rating
     fun listByWorst(players: List<Player?>): List<Player?> {
-        return players.sortedBy{ it?.playerRating }
+        return players.sortedBy { it?.playerRating }
     }
 
     // list by lowest to the highest rating
@@ -204,7 +204,6 @@ class PlayerAPI(serializerType: Serializer) {
         }
         return suggestPro
     }
-
 
     @Suppress("UNCHECKED_CAST")
     @Throws(Exception::class)

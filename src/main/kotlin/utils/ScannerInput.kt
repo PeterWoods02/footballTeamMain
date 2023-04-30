@@ -42,7 +42,6 @@ object ScannerInput {
      * @return The number read from the user and verified as a double.
      */
 
-
     /**
      * Read a line of text from the user.  There is no validation done on the entered data.
      *

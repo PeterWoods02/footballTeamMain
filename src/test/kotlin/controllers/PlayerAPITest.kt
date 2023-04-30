@@ -164,7 +164,6 @@ class PlayerAPITest {
             val playersString = populatedPlayers!!.playersSixtyMinutes().lowercase()
             assertTrue(playersString.contains("messi"))
             assertFalse { playersString.contains("peter") }
-
         }
 
         @Test
@@ -182,7 +181,6 @@ class PlayerAPITest {
             val playersString = populatedPlayers!!.aboveRating(8)
             assertTrue(playersString.contains("Ronaldo"))
             assertFalse { playersString.contains("Messi") }
-
         }
 
         @Test
@@ -207,7 +205,6 @@ class PlayerAPITest {
             val playersString = populatedPlayers!!.suggestPro().lowercase()
             assertTrue(playersString.contains("messi"))
             assertFalse { playersString.contains("peter") }
-
         }
 
         @Test
@@ -217,7 +214,6 @@ class PlayerAPITest {
             val playersString = populatedPlayers!!.listProPlayers().lowercase()
             assertTrue(playersString.contains("messi"))
             assertFalse { playersString.contains("peter") }
-
         }
 
         @Test
@@ -231,9 +227,7 @@ class PlayerAPITest {
             assertTrue(playersString.contains("bob"))
             assertTrue(playersString.contains("mary"))
             assertFalse(playersString.contains("messi"))
-
         }
-
 
         @Test
         fun `test for listing highest to lowest rated players`() {
@@ -241,7 +235,6 @@ class PlayerAPITest {
             val playersString = populatedPlayers!!.aboveRating(8)
             assertTrue(playersString.contains("Peter"))
             assertFalse { playersString.contains("Mary") }
-
         }
 
         @Test
@@ -266,9 +259,7 @@ class PlayerAPITest {
             val playersString = populatedPlayers!!.listToPlayMatches().lowercase()
             assertTrue(playersString.contains("ronaldo"))
             assertFalse { playersString.contains("messi") }
-
         }
-
     }
 
     @Nested
@@ -281,9 +272,7 @@ class PlayerAPITest {
             val searchDate2 = "01-01-2005"
             val searchResult2 = populatedPlayers?.searchPlayerByDOB(searchDate2)
 
-
             val playersString1 = searchResult1?.lowercase()
-
 
             if (playersString1 != null) {
                 assertTrue(playersString1.contains("peter"))
@@ -292,7 +281,6 @@ class PlayerAPITest {
                 assertTrue(playersString1.contains("bob"))
                 assertTrue(playersString1.contains("mary"))
             }
-
 
             assertEquals("No matches found for: 01-01-2005", searchResult2)
         }
@@ -313,7 +301,6 @@ class PlayerAPITest {
             if (playersString2 != null) {
                 assertTrue(playersString2.contains("mary"))
             }
-
         }
 
         @Test
@@ -335,19 +322,13 @@ class PlayerAPITest {
             assertTrue(isAdded)
             assertTrue(isAdded2)
 
-
             val searchResult = populatedPlayers?.searchMatchesByMinutes("70")?.lowercase()
 
             if (searchResult != null) {
                 assertTrue(searchResult.contains("ronaldo"))
                 assertFalse(searchResult.contains("messi"))
-
             }
-
-
-
         }
-
     }
 
     @Nested
@@ -474,7 +455,6 @@ class PlayerAPITest {
             assertEquals(storingPlayers.findPlayer(2), loadedPlayers.findPlayer(2))
         }
 
-
         @Nested
         inner class PersistenceTests {
 
@@ -484,11 +464,11 @@ class PlayerAPITest {
                 val storingPlayers = PlayerAPI(JSONSerializer(File("players.JSON")))
                 storingPlayers.store()
 
-                //Loading the empty players.JSON file into a new object
+                // Loading the empty players.JSON file into a new object
                 val loadedPlayers = PlayerAPI(JSONSerializer(File("players.JSON")))
                 loadedPlayers.load()
 
-                //Comparing the source of the players (storingPlayers) with the JSON loaded players (loadedPlayers)
+                // Comparing the source of the players (storingPlayers) with the JSON loaded players (loadedPlayers)
                 assertEquals(0, storingPlayers.numberOfPlayers())
                 assertEquals(0, loadedPlayers.numberOfPlayers())
                 assertEquals(storingPlayers.numberOfPlayers(), loadedPlayers.numberOfPlayers())
@@ -503,11 +483,11 @@ class PlayerAPITest {
                 storingPlayers.add(bob!!)
                 storingPlayers.store()
 
-                //Loading players.JSON into a different collection
+                // Loading players.JSON into a different collection
                 val loadedPlayers = PlayerAPI(JSONSerializer(File("players.JSON")))
                 loadedPlayers.load()
 
-                //Comparing the source of the players (storingPlayers) with the JSON loaded players (loadedPlayers)
+                // Comparing the source of the players (storingPlayers) with the JSON loaded players (loadedPlayers)
                 assertEquals(3, storingPlayers.numberOfPlayers())
                 assertEquals(3, loadedPlayers.numberOfPlayers())
                 assertEquals(storingPlayers.numberOfPlayers(), loadedPlayers.numberOfPlayers())
@@ -516,6 +496,5 @@ class PlayerAPITest {
                 assertEquals(storingPlayers.findPlayer(2), loadedPlayers.findPlayer(2))
             }
         }
-
     }
 }

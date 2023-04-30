@@ -10,7 +10,6 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import kotlin.system.exitProcess
 
-
 private val playerAPI = PlayerAPI(XMLSerializer(File("players.xml")))
 
 // private val PlayerAPI = PlayerAPI(JSONSerializer(File("players.json")))
@@ -18,7 +17,6 @@ private val playerAPI = PlayerAPI(XMLSerializer(File("players.xml")))
 fun main() {
     runMenu()
 }
-
 
 fun mainMenu() = readNextInt(
     """ 
