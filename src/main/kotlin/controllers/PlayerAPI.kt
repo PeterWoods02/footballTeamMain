@@ -130,7 +130,7 @@ class PlayerAPI(serializerType: Serializer) {
             var listOfPlayers = ""
             for (player in players) {
                 for (match in player.matches) {
-                    if (match.minPlayed.equals(searchString)) {
+                    if (match.minPlayed.toString() >= searchString) {
                         listOfPlayers += "${player.playerId}: ${player.playerName} \n\t${match}\n"
                     }
                 }

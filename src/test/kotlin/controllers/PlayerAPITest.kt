@@ -168,7 +168,7 @@ class PlayerAPITest {
         }
 
         @Test
-        fun `test for listing all players above user inputed rating`() {
+        fun `test for listing all players above user inputted rating`() {
 
             val newPlayer = Player(1, "Leo Messi", "10-08-1993", 6, false)
             val newPlayer2 = Player(2, "Ronaldo", "10-08-1993", 10, false)
@@ -278,6 +278,38 @@ class PlayerAPITest {
             if (playersString2 != null) {
                 assertTrue(playersString2.contains("mary"))
             }
+
+        }
+
+        @Test
+        fun searchMatchesByMinutes() {
+            // Create a list of players
+            val match1 = Match(0, 33, true)
+            val match2 = Match(0, 66, false)
+            val match4 = Match(0, 75, false)
+            val match3 = Match(0, 76, true)
+            val matches = mutableSetOf(match1, match2)
+            val matches2 = mutableSetOf(match3, match4)
+
+            val newPlayer = Player(1, "Leo Messi", "10-08-1993", 10, false, matches)
+            val newPlayer2 = Player(2, "Ronaldo", "10-08-1993", 5, false, matches2)
+
+            val isAdded = populatedPlayers!!.add(newPlayer)
+            val isAdded2 = populatedPlayers!!.add(newPlayer2)
+
+            assertTrue(isAdded)
+            assertTrue(isAdded2)
+
+
+            val searchResult = populatedPlayers?.searchMatchesByMinutes("70")?.lowercase()
+
+            if (searchResult != null) {
+                assertTrue(searchResult.contains("ronaldo"))
+                assertFalse(searchResult.contains("messi"))
+
+            }
+
+
 
         }
 
