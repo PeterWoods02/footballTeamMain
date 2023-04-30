@@ -50,6 +50,6 @@ data class Player(
 
     override fun toString(): String {
         val pro = if (isPlayerPro) 'Y' else 'N'
-        return "$playerId: $playerName, DOB($playerDOB), Rating($playerRating), PRO($pro) \n${listMatches()}"
+        return "\n$playerId: $playerName, DOB($playerDOB), Rating($playerRating), PRO($pro) \n${listMatches()}"
     }
 }

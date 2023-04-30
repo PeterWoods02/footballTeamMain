@@ -27,5 +27,35 @@
       <matches class="linked-hash-set"/>
       <lastMatchId>0</lastMatchId>
     </models.Player>
+    <models.Player>
+      <playerId>4</playerId>
+      <playerName>Joe Bloggs</playerName>
+      <playerDOB>01-09-2000</playerDOB>
+      <playerRating>5</playerRating>
+      <isPlayerPro>false</isPlayerPro>
+      <matches class="linked-hash-set">
+        <models.Match>
+          <matchId>0</matchId>
+          <minPlayed>66</minPlayed>
+          <matchWon>false</matchWon>
+        </models.Match>
+      </matches>
+      <lastMatchId>1</lastMatchId>
+    </models.Player>
+    <models.Player>
+      <playerId>5</playerId>
+      <playerName>Leo Messi</playerName>
+      <playerDOB>10-02-1990</playerDOB>
+      <playerRating>10</playerRating>
+      <isPlayerPro>true</isPlayerPro>
+      <matches class="linked-hash-set">
+        <models.Match>
+          <matchId>0</matchId>
+          <minPlayed>90</minPlayed>
+          <matchWon>true</matchWon>
+        </models.Match>
+      </matches>
+      <lastMatchId>1</lastMatchId>
+    </models.Player>
   </list>
 </object-stream>
