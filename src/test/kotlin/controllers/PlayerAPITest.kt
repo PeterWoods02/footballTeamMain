@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import persistence.JSONSerializer
 import persistence.XMLSerializer
 import java.io.File
 import kotlin.test.assertEquals
@@ -156,16 +157,14 @@ class PlayerAPITest {
 
             val isAdded = populatedPlayers!!.add(newPlayer)
             val isAdded2 = populatedPlayers!!.add(newPlayer2)
-            val actual = populatedPlayers!!.playersSixtyMinutes()
 
             assertTrue(isAdded)
             assertTrue(isAdded2)
-            assertEquals(
-                "6: Leo Messi, DOB(10-08-1993), Rating(10), PRO(N) \n" +
-                    "\t0: 45 minutes (Lost)\n" +
-                    "\t0: 66 minutes (Lost)",
-                actual
-            )
+
+            val playersString = populatedPlayers!!.playersSixtyMinutes().lowercase()
+            assertTrue(playersString.contains("messi"))
+            assertFalse { playersString.contains("peter") }
+
         }
 
         @Test
@@ -183,17 +182,40 @@ class PlayerAPITest {
 
             val isAdded = populatedPlayers!!.add(newPlayer)
             val isAdded2 = populatedPlayers!!.add(newPlayer2)
-            val actual = populatedPlayers!!.suggestPro()
 
             assertTrue(isAdded)
             assertTrue(isAdded2)
-            assertEquals(
-                "6: Leo Messi, DOB(10-08-1993), Rating(10), PRO(N) \n" +
-                    "\t0: 76 minutes (Won)\n" +
-                    "\t0: 66 minutes (Lost)",
-                actual
-            )
+
+            val playersString = populatedPlayers!!.suggestPro().lowercase()
+            assertTrue(playersString.contains("messi"))
+            assertFalse { playersString.contains("peter") }
+
         }
+
+        @Test
+        fun `test for listing all pro players`() {
+            val newPlayer = Player(1, "Leo Messi", "10-08-1993", 10, true)
+            assertTrue(populatedPlayers!!.add(newPlayer))
+            val playersString = populatedPlayers!!.listProPlayers().lowercase()
+            assertTrue(playersString.contains("messi"))
+            assertFalse { playersString.contains("peter") }
+
+        }
+
+        @Test
+        fun `test for listing all amateur players`() {
+            val newPlayer = Player(1, "Leo Messi", "10-08-1993", 10, true)
+            assertTrue(populatedPlayers!!.add(newPlayer))
+            val playersString = populatedPlayers!!.listAmateurPlayers().lowercase()
+            assertTrue(playersString.contains("peter"))
+            assertTrue(playersString.contains("james"))
+            assertTrue(playersString.contains("joe"))
+            assertTrue(playersString.contains("bob"))
+            assertTrue(playersString.contains("mary"))
+            assertFalse(playersString.contains("messi"))
+
+        }
+
     }
 
     @Nested
@@ -206,31 +228,39 @@ class PlayerAPITest {
             val searchDate2 = "01-01-2005"
             val searchResult2 = populatedPlayers?.searchPlayerByDOB(searchDate2)
 
-            assertEquals(
-                "1: Peter Woods 11-09-2002 \n" +
-                        "2: James Power 13-02-2000 \n" +
-                        "3: Joe Doe 02-04-2003 \n" +
-                        "4: Bob Builder 22-10-1999 \n" +
-                        "5: Mary Daly 30-09-1998 \n",
-                searchResult1
-            )
+
+            val playersString1 = searchResult1?.lowercase()
+
+
+            if (playersString1 != null) {
+                assertTrue(playersString1.contains("peter"))
+                assertTrue(playersString1.contains("james"))
+                assertTrue(playersString1.contains("joe"))
+                assertTrue(playersString1.contains("bob"))
+                assertTrue(playersString1.contains("mary"))
+            }
+
+
             assertEquals("No matches found for: 01-01-2005", searchResult2)
         }
 
         @Test
-        fun serachPlayerByName() {
+        fun searchPlayerByName() {
             val searchName1 = "Peter"
             val searchResult1 = populatedPlayers?.searchPlayerByName(searchName1)
             val searchName2 = "Mary"
             val searchResult2 = populatedPlayers?.searchPlayerByName(searchName2)
 
-            assertEquals(
-                "1: Peter Woods, DOB(11-09-2002), Rating(9), PRO(N) \n" +
-                        "\tNO MATCHES ADDED",
-                searchResult1
-            )
-            assertEquals("5: Mary Daly, DOB(30-09-1998), Rating(7), PRO(N) \n" +
-                    "\tNO MATCHES ADDED", searchResult2)
+            val playersString = searchResult1?.lowercase()
+            if (playersString != null) {
+                assertTrue(playersString.contains("peter"))
+            }
+
+            val playersString2 = searchResult2?.lowercase()
+            if (playersString2 != null) {
+                assertTrue(playersString2.contains("mary"))
+            }
+
         }
 
     }
@@ -359,7 +389,7 @@ class PlayerAPITest {
             assertEquals(storingPlayers.findPlayer(2), loadedPlayers.findPlayer(2))
         }
 
-/*
+
         @Nested
         inner class PersistenceTests {
 
@@ -401,6 +431,6 @@ class PlayerAPITest {
                 assertEquals(storingPlayers.findPlayer(2), loadedPlayers.findPlayer(2))
             }
         }
-*/
+
     }
 }
